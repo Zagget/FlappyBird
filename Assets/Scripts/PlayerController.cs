@@ -38,6 +38,7 @@ public class PlayerController : Subject
         {
             Debug.Log("Player Died");
             NotifyObservers(PlayerAction.Die);
+            Destroy(gameObject);
         }
     }
 }
