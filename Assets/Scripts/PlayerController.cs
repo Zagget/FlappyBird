@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : Subject
@@ -34,11 +32,18 @@ public class PlayerController : Subject
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Pipe")) // Check if the player hit a pipe
+        if (other.CompareTag("Pipe"))
         {
             Debug.Log("Player Died");
             NotifyObservers(PlayerAction.Die);
             Destroy(gameObject);
+            return;
+        }
+
+        if (other.CompareTag("PassedPipe"))
+        {
+            Debug.Log("Player passed a pipe");
+            NotifyObservers(PlayerAction.PassedPipe);
         }
     }
 }

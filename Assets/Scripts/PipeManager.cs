@@ -8,10 +8,15 @@ public class PipeManager : MonoBehaviour
     [SerializeField] float spawnInterval = 2f;
     [SerializeField] float pipeLifeTime = 8f;
 
-    [SerializeField] GameObject pipeHigh;
-    [SerializeField] GameObject pipeMedium;
-    [SerializeField] GameObject pipeLow;
+    [SerializeField] GameObject pipe;
 
+
+    float SPAWNPOINTX = 4.5f;
+
+    float maxHeight = 3f;
+    float minHeight = -1.6f;
+
+    Vector3 spawnPoint;
     List<GameObject> spawnedPipes = new List<GameObject>();
     float spawnTimer;
 
@@ -41,8 +46,7 @@ public class PipeManager : MonoBehaviour
             GameObject pipe = spawnedPipes[i];
             pipe.transform.Translate(Vector2.left * speed * Time.deltaTime);
 
-            // Destroy pipe if it exceeds its lifetime
-            if (pipe.transform.position.x < -10f) // Adjust this position threshold as needed
+            if (pipe.transform.position.x < -5)
             {
                 Destroy(pipe);
                 spawnedPipes.RemoveAt(i);
@@ -52,30 +56,32 @@ public class PipeManager : MonoBehaviour
 
     void SpawnPipe()
     {
-        GameObject pipe = GetRandomPipe();
+        UpdateSpawnPoint();
 
-        if (pipe == null)
-        {
-            Debug.Log("pipe is null");
-        }
-
-        var spawnedPipe = Instantiate(pipe);
-
+        var spawnedPipe = Instantiate(pipe, spawnPoint, Quaternion.identity);
         spawnedPipes.Add(spawnedPipe);
+        Debug.Log($"Spawned pipe at:  {spawnPoint.x} , {spawnPoint.y}");
     }
 
-
-    GameObject GetRandomPipe()
+    Vector3 UpdateSpawnPoint()
     {
-        int randomPipe = Random.Range(1, 4);
-
-        switch (randomPipe)
+        int randomSpawnHeight = Random.Range(1, 4);
+        float height = 0;
+        switch (randomSpawnHeight)
         {
-            case 1: return pipeHigh;
-            case 2: return pipeMedium;
-            case 3: return pipeLow;
-            default: return null;
+            case 1:
+                height = maxHeight;
+                break;
+            case 2:
+                height = minHeight;
+                break;
+            case 3:
+                height = maxHeight + minHeight * 0.5f;
+                break;
         }
+        spawnPoint = new Vector3(SPAWNPOINTX, height);
+
+        return spawnPoint;
     }
 
 }

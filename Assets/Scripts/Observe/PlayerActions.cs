@@ -1,5 +1,6 @@
 public enum PlayerAction
 {
     Jump,
-    Die
+    Die,
+    PassedPipe
 }
