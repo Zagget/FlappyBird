@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 
 public class PipeManager : MonoBehaviour
 {
+    [Header("Pipe")]
     [SerializeField] float speed = 5f;
     [SerializeField] float spawnInterval = 2f;
-    [SerializeField] float pipeLifeTime = 8f;
 
     [SerializeField] GameObject pipe;
 

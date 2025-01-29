@@ -4,7 +4,8 @@ public class PlayerAudio : MonoBehaviour, IObserver
 {
     [SerializeField] Subject playerSubject;
     [SerializeField] SoundData DeathSounds;
-    [SerializeField] SoundData JumpSounds;
+    [SerializeField] SoundData FlapSounds;
+    [SerializeField] SoundData PassedPipeSounds;
 
 
     public void OnNotify(PlayerAction action)
@@ -12,13 +13,15 @@ public class PlayerAudio : MonoBehaviour, IObserver
         if (action == PlayerAction.Die)
         {
             SoundManager.Instance.PlayRandomSound(DeathSounds);
-            Debug.Log("play death sound");
         }
 
         if (action == PlayerAction.Jump)
         {
-            SoundManager.Instance.PlayRandomSound(JumpSounds);
-            Debug.Log("play jump sound");
+            SoundManager.Instance.PlayRandomSound(FlapSounds);
+        }
+        if (action == PlayerAction.PassedPipe)
+        {
+            SoundManager.Instance.PlayRandomSound(PassedPipeSounds);
         }
     }
 

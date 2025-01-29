@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -8,6 +7,18 @@ public class SoundManager : MonoBehaviour
     private static SoundManager instance;
     public static SoundManager Instance { get { return instance; } }
 
+
+
+    [Header("Volume Control")]
+    [SerializeField]
+    [Range(0.0001f, 1f)]
+    public float player = 1.0f;
+
+    [SerializeField]
+    [Range(0.0001f, 1f)]
+    public float background = 1.0f;
+
+    [SerializeField] AudioMixer mixer;
 
     // Audiosources so no sound gets cut off.
     private int currentAudioSourceIndex = 0;
@@ -33,6 +44,17 @@ public class SoundManager : MonoBehaviour
         {
             AudioSource source = gameObject.AddComponent<AudioSource>();
             audioSources.Add(source);
+        }
+
+        SetAudioMixerVolume();
+    }
+
+    private void SetAudioMixerVolume()
+    {
+        if (mixer != null)
+        {
+            mixer.SetFloat("playerVolume", Mathf.Log10(player) * 20);
+            mixer.SetFloat("backgroundVolume", Mathf.Log10(background) * 20);
         }
     }
 
@@ -87,5 +109,10 @@ public class SoundManager : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    private void OnValidate()
+    {
+        SetAudioMixerVolume();
     }
 }

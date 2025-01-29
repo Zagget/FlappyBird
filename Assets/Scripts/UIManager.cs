@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour, IObserver
 {
     [SerializeField] Subject playerSubject;
     [SerializeField] int passedPipe;
-    [SerializeField] TextMeshPro passedPipeText;
+    [SerializeField] TextMeshProUGUI passedPipeText;
 
 
     public void OnNotify(PlayerAction action)
@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour, IObserver
         }
     }
 
-    void UpdateText(TextMeshPro text)
+    void UpdateText(TextMeshProUGUI text)
     {
         passedPipeText.text = passedPipe.ToString();
     }
