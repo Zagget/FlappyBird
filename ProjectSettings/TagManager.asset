@@ -67,11 +67,14 @@ TagManager:
   - name: Pipe
     uniqueID: 701648927
     locked: 0
-  - name: Wing
+  - name: RightWing
     uniqueID: 4089605003
     locked: 0
   - name: Bird
     uniqueID: 787345943
+    locked: 0
+  - name: LeftWing
+    uniqueID: 44270129
     locked: 0
   - name: UI
     uniqueID: 1500809447
