@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IObserver
 {
-    void OnNotify(PlayerAction action);
+    void OnNotify(Events action, int value = 0);
 }

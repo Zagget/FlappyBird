@@ -2,24 +2,25 @@ using UnityEngine;
 
 public class PlayerAudio : MonoBehaviour, IObserver
 {
-    [SerializeField] Subject playerSubject;
+    [SerializeField] Subject gameManagerSubject;
     [SerializeField] SoundData DeathSounds;
     [SerializeField] SoundData FlapSounds;
     [SerializeField] SoundData PassedPipeSounds;
 
 
-    public void OnNotify(PlayerAction action)
+    public void OnNotify(Events action, int value = 0)
     {
-        if (action == PlayerAction.Die)
+        if (action == Events.Die)
         {
             SoundManager.Instance.PlayRandomSound(DeathSounds);
         }
 
-        if (action == PlayerAction.Jump)
+        if (action == Events.Jump)
         {
             SoundManager.Instance.PlayRandomSound(FlapSounds);
         }
-        if (action == PlayerAction.PassedPipe)
+
+        if (action == Events.PassedPipe)
         {
             SoundManager.Instance.PlayRandomSound(PassedPipeSounds);
         }
@@ -27,11 +28,11 @@ public class PlayerAudio : MonoBehaviour, IObserver
 
     private void OnEnable()
     {
-        playerSubject.AddObserver(this);
+        gameManagerSubject.AddObserver(this);
     }
 
     private void OnDisable()
     {
-        playerSubject.RemoveObserver(this);
+        gameManagerSubject.RemoveObserver(this);
     }
 }

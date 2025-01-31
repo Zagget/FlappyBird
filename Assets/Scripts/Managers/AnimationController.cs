@@ -6,9 +6,9 @@ public class AnimationController : MonoBehaviour, IObserver
 
     [SerializeField] Animator birdController;
 
-    public void OnNotify(PlayerAction action)
+    public void OnNotify(Events action, int value = 0)
     {
-        if (action == PlayerAction.Jump)
+        if (action == Events.Jump)
         {
             PlayAnimation(birdController, "Flap");
         }

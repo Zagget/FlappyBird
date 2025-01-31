@@ -18,11 +18,11 @@ public class Subject : MonoBehaviour
     }
 
     // Notify all observers about an event
-    public void NotifyObservers(PlayerAction action)
+    public void NotifyObservers(Events action, int value = 0)
     {
         foreach (IObserver observer in observers)
         {
-            observer.OnNotify(action);
+            observer.OnNotify(action, value);
         }
     }
 }
