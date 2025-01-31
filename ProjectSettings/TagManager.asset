@@ -43,3 +43,33 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Sky
+    uniqueID: 2267428673
+    locked: 0
+  - name: bg1
+    uniqueID: 2205674455
+    locked: 0
+  - name: bg2
+    uniqueID: 535622763
+    locked: 0
+  - name: bg3
+    uniqueID: 537849611
+    locked: 0
+  - name: bg4
+    uniqueID: 71713447
+    locked: 0
+  - name: bg5
+    uniqueID: 636677155
+    locked: 0
+  - name: bg6
+    uniqueID: 1064463241
+    locked: 0
+  - name: Pipe
+    uniqueID: 701648927
+    locked: 0
+  - name: Wing
+    uniqueID: 4089605003
+    locked: 0
+  - name: Bird
+    uniqueID: 787345943
+    locked: 0
