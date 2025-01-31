@@ -1,12 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackGroundManager : MonoBehaviour
+public class BackGroundManager : MonoBehaviour, IObserver
 {
+    [Header("BackgroundImages")]
     [SerializeField] List<GameObject> ImagePrefabs = new List<GameObject>();
     List<BackgroundImage> backgroundImages = new List<BackgroundImage>();
 
     [SerializeField] bool scrollLeft;
+    [SerializeField] Subject gameManagerSubject;
+
+    bool move = true;
 
     void Start()
     {
@@ -28,13 +32,38 @@ public class BackGroundManager : MonoBehaviour
         }
     }
 
+    public void OnNotify(Events @event, int value = 0)
+    {
+        if (@event == Events.Die)
+        {
+            move = false;
+        }
+    }
+
     void Update()
     {
-        // Iterate through all background images and update them
+        if (move)
+        {
+            MoveBackground();
+        }
+    }
+
+    private void MoveBackground()
+    {
         foreach (var backgroundImage in backgroundImages)
         {
             backgroundImage.Scroll();
             backgroundImage.CheckReset();
         }
+    }
+
+
+    private void OnEnable()
+    {
+        gameManagerSubject.AddObserver(this);
+    }
+    private void OnDisable()
+    {
+        gameManagerSubject.RemoveObserver(this);
     }
 }

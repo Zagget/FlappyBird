@@ -930,6 +930,7 @@ MonoBehaviour:
   - {fileID: 3458748360565421235, guid: 5a194f1e4b6b41243b2933a0f4f4ee9c, type: 3}
   - {fileID: 6028584372027757672, guid: 18937123c9ed67142bb0b6493192db6e, type: 3}
   scrollLeft: 1
+  gameManagerSubject: {fileID: 1449345719}
 --- !u!1 &620247957
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,6 +1621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 447b8915eb7beb0419b20864bb951752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManagerSubject: {fileID: 1449345719}
   speed: 3
   spawnInterval: 2
   pipe: {fileID: 3526880813056194422, guid: b606d440de1c9424480f8bf8e945e843, type: 3}

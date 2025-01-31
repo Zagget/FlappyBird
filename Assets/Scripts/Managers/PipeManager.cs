@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PipeManager : MonoBehaviour
+public class PipeManager : MonoBehaviour, IObserver
 {
-    [Header("Pipe")]
+    [SerializeField] Subject gameManagerSubject;
+
+    [Header("Behaviour")]
     [SerializeField] float speed = 5f;
     [SerializeField] float spawnInterval = 2f;
 
+    [Header("Obstacles")]
     [SerializeField] GameObject pipe;
 
 
@@ -19,13 +22,24 @@ public class PipeManager : MonoBehaviour
     List<GameObject> spawnedPipes = new List<GameObject>();
     float spawnTimer;
 
+    bool move = true;
+
+    public void OnNotify(Events @event, int value)
+    {
+        if (@event == Events.Die)
+        {
+            move = false;
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
-        SpawnTimer();
-
-        MoveAndDestroy();
+        if (move)
+        {
+            SpawnTimer();
+            MoveAndDestroy();
+        }
     }
 
     void SpawnTimer()
@@ -83,4 +97,13 @@ public class PipeManager : MonoBehaviour
         return spawnPoint;
     }
 
+    private void OnEnable()
+    {
+        gameManagerSubject.AddObserver(this);
+    }
+
+    private void OnDisable()
+    {
+        gameManagerSubject.RemoveObserver(this);
+    }
 }

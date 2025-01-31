@@ -8,7 +8,6 @@ public class BackgroundImage : MonoBehaviour
     void Start()
     {
         SetupTexture();
-
     }
 
     public void SetScrollDirection(bool scrollLeft)
