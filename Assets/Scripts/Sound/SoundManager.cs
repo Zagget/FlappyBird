@@ -7,8 +7,6 @@ public class SoundManager : MonoBehaviour
     private static SoundManager instance;
     public static SoundManager Instance { get { return instance; } }
 
-
-
     [Header("Volume Control")]
     [SerializeField]
     [Range(0.0001f, 1f)]

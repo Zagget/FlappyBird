@@ -169,7 +169,7 @@ MonoBehaviour:
   playerSubject: {fileID: 513562028}
   DeathSounds: {fileID: 0}
   FlapSounds: {fileID: 11400000, guid: 9594a01a1586d8e499465fe87ac83705, type: 2}
-  PassedPipeSounds: {fileID: 0}
+  PassedPipeSounds: {fileID: 11400000, guid: 10c036d122742d74d905e61f5e99d3c4, type: 2}
 --- !u!1 &107093119
 GameObject:
   m_ObjectHideFlags: 0

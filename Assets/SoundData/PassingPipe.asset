@@ -12,4 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9700282dbd18be4b8f6f2ac85946d22, type: 3}
   m_Name: PassingPipe
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: pass1
+    clip: {fileID: 8300000, guid: 1b5b1f89593137b4b80dc6cad32a6bd3, type: 3}
+    loop: 0
+    mixer: {fileID: -3983551741650903837, guid: 10979328700eff0419d1ada5f4311787, type: 2}
+  - name: pass2
+    clip: {fileID: 8300000, guid: db88a9379b5100b46a55b0e2ef6c344e, type: 3}
+    loop: 0
+    mixer: {fileID: -3983551741650903837, guid: 10979328700eff0419d1ada5f4311787, type: 2}
+  - name: pass3
+    clip: {fileID: 8300000, guid: cfb5473458cc4ea4ba9761eb15b10667, type: 3}
+    loop: 0
+    mixer: {fileID: -3983551741650903837, guid: 10979328700eff0419d1ada5f4311787, type: 2}
