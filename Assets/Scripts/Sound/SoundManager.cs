@@ -64,10 +64,8 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-        // Pick a random sound entry
         SoundData.SoundEntry randomEntry = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
 
-        // Play the random sound
         PlayClip(randomEntry.clip, randomEntry.loop, randomEntry.mixer);
     }
 
@@ -85,7 +83,6 @@ public class SoundManager : MonoBehaviour
 
         // Move to the next audio source in the list
         currentAudioSourceIndex = (currentAudioSourceIndex + 1) % audioSources.Count;
-        Debug.Log($"SOUND: Played {clip} on {mixer}");
     }
 
     private bool CheckIfSoundDataEmpty(SoundData soundData)
