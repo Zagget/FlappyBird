@@ -10,7 +10,7 @@ public class PipeManager : MonoBehaviour
     [SerializeField] GameObject pipe;
 
 
-    float SPAWNPOINTX = 4.5f;
+    float SPAWNPOINTX = 9.5f;
 
     float maxHeight = 3f;
     float minHeight = -1.6f;

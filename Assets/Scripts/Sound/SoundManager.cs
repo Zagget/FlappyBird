@@ -58,7 +58,6 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-
     public void PlayRandomSound(SoundData soundData)
     {
         bool empty = CheckIfSoundDataEmpty(soundData);
