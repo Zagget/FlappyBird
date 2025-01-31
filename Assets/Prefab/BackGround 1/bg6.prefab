@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6385053131175173129}
   - component: {fileID: 6244695503556103952}
-  - component: {fileID: 4128093469125901655}
+  - component: {fileID: -8596344898545577763}
   m_Layer: 0
   m_Name: bg6
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4128093469125901655
+--- !u!114 &-8596344898545577763
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,5 +98,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  scrollLeft: 1
-  singleTextureWidth: 0

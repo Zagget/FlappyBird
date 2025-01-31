@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8719473900437347368}
   - component: {fileID: 2898599973630458836}
-  - component: {fileID: 8727758416056337374}
+  - component: {fileID: -3431814712287217465}
   m_Layer: 0
   m_Name: bg3
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8727758416056337374
+--- !u!114 &-3431814712287217465
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,6 +97,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea6bb3d2d59c2a4991c7523a6dcec7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
-  scrollLeft: 1
-  singleTextureWidth: 0
+  moveSpeed: 1.5

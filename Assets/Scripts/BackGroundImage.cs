@@ -2,13 +2,17 @@ using UnityEngine;
 
 public class BackgroundImage : MonoBehaviour
 {
-    public float moveSpeed;
-    public bool scrollLeft;
-    public float singleTextureWidth;
+    [SerializeField] float moveSpeed;
+    float singleTextureWidth;
 
     void Start()
     {
         SetupTexture();
+
+    }
+
+    public void SetScrollDirection(bool scrollLeft)
+    {
         if (scrollLeft) moveSpeed = -moveSpeed;
     }
 

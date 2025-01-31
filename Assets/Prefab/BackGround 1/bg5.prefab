@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8278584641559925077}
   - component: {fileID: 8289712900409743816}
-  - component: {fileID: 2876029170722778459}
+  - component: {fileID: -3944220622554201438}
   m_Layer: 0
   m_Name: bg5
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2876029170722778459
+--- !u!114 &-3944220622554201438
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,5 +98,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  scrollLeft: 1
-  singleTextureWidth: 0
