@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pipe
   - PassedPipe
+  - Bounds
   layers:
   - Default
   - TransparentFX

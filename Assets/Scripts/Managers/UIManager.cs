@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : Subject, IObserver
 {
@@ -10,24 +11,35 @@ public class UIManager : Subject, IObserver
     [SerializeField] TextMeshProUGUI scoreText;
 
     [Header("Overlays")]
-    [SerializeField] GameObject InGameOverlay;
+    [SerializeField] GameObject inGameOverlay;
     [SerializeField] GameObject diedOverlay;
 
     [Header("Buttons")]
     [SerializeField] Button retry;
     [SerializeField] Button menu;
 
-    int highScore;
-
     void Start()
     {
-        SetOverlay(diedOverlay, false);
-        SetOverlay(InGameOverlay, true);
+        InGameOverlay();
+
+        retry.onClick.AddListener(OnRetryClicked);
+        menu.onClick.AddListener(OnMenuClicked);
+    }
+
+    public void InGameOverlay()
+    {
+        diedOverlay.SetActive(false);
+        inGameOverlay.SetActive(true);
+    }
+
+    public void GameOverOverlay()
+    {
+        inGameOverlay.SetActive(false);
+        diedOverlay.SetActive(true);
     }
 
     public void OnNotify(Events @event, int value)
     {
-        Debug.Log($"UIManager received event: {@event} with value: {value}");
         if (@event == Events.PassedPipe)
         {
             UpdateScore(value);
@@ -35,7 +47,8 @@ public class UIManager : Subject, IObserver
 
         if (@event == Events.Die)
         {
-            SetOverlay(InGameOverlay, true);
+            GameOverOverlay();
+
         }
 
         if (@event == Events.NewHighScore)
@@ -44,17 +57,26 @@ public class UIManager : Subject, IObserver
         }
     }
 
+    void ShowHighScores()
+    {
 
+    }
 
     void UpdateScore(int value)
     {
-
         scoreText.text = value.ToString();
     }
 
-    void SetOverlay(GameObject overlay, bool show)
+    void OnRetryClicked()
     {
-        overlay.SetActive(show);
+        Debug.Log("Retry button clicked!");
+        SceneLoader.Instance.LoadScene(1);
+    }
+
+    void OnMenuClicked()
+    {
+        Debug.Log("Menu clicked");
+        SceneLoader.Instance.LoadScene(0);
     }
 
     void OnEnable()

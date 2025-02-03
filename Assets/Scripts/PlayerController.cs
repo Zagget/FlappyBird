@@ -57,4 +57,14 @@ public class PlayerController : Subject
             NotifyObservers(Events.PassedPipe);
         }
     }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Bounds"))
+        {
+            Debug.Log("Player got outside bounds");
+            NotifyObservers(Events.Die);
+            Destroy(gameObject);
+        }
+    }
 }

@@ -9,7 +9,7 @@ public class GameManager : Subject, IObserver
     [SerializeField] int highScore;
     [SerializeField] int currentJump;
 
-    [SerializeField] List<string> highScoreList = new List<string>();
+    [SerializeField] List<int> highScoreList = new List<int>();
 
     void Start()
     {
@@ -46,10 +46,12 @@ public class GameManager : Subject, IObserver
     {
         for (int i = 0; i < highScoreList.Count; i++)
         {
-
+            if (highScoreList[i] < currentScore)
+            {
+                highScoreList.Add(currentScore);
+            }
         }
     }
-
 
     void Save()
     {
