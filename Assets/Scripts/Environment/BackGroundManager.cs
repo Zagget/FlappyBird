@@ -19,6 +19,7 @@ public class BackGroundManager : MonoBehaviour, IObserver
 
     void SetUpImages()
     {
+        backgroundImages.Clear();
         for (int i = 0; i < ImagePrefabs.Count; i++)
         {
             GameObject background = Instantiate(ImagePrefabs[i]);

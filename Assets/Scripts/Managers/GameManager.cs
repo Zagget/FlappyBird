@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
-public class GameManager : Subject, IObserver
+public class GameManager : Subject, IObserver, IDataPersistance
 {
     [SerializeField] Subject playerSubject;
     [SerializeField] int currentScore;
@@ -13,7 +13,7 @@ public class GameManager : Subject, IObserver
 
     void Start()
     {
-        ResetValues();
+        //ResetValues();
     }
 
     void ResetValues()
@@ -39,6 +39,7 @@ public class GameManager : Subject, IObserver
         {
             NotifyObservers(Events.Die);
             CheckScore();
+            DataPersistanceManager.Instance.SaveGame();
         }
     }
 
@@ -53,10 +54,14 @@ public class GameManager : Subject, IObserver
         }
     }
 
-    void Save()
+    public void LoadData(PlayerData data)
     {
-        PlayerSaveData saveData = new PlayerSaveData();
-        saveData.Name = "player";
+        this.currentScore = data.highScore;
+    }
+
+    public void SaveData(PlayerData data)
+    {
+        data.highScore = this.currentScore;
     }
 
     void OnEnable()
