@@ -73,7 +73,6 @@ public class PipeManager : MonoBehaviour, IObserver
 
         var spawnedPipe = Instantiate(pipe, spawnPoint, Quaternion.identity);
         spawnedPipes.Add(spawnedPipe);
-        Debug.Log($"Spawned pipe at:  {spawnPoint.x} , {spawnPoint.y}");
     }
 
     Vector3 UpdateSpawnPoint()

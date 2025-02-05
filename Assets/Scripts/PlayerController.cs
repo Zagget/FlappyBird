@@ -60,6 +60,8 @@ public class PlayerController : Subject
 
     void OnTriggerExit2D(Collider2D other)
     {
+        if (gameObject == null) return;
+
         if (other.CompareTag("Bounds"))
         {
             Debug.Log("Player got outside bounds");

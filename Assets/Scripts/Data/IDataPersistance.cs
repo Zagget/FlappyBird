@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IDataPersistance
+public interface IDataPersistance<T>
 {
-    void LoadData(PlayerData data);
-    void SaveData(PlayerData data);
+    void LoadData(T data);
+    void SaveData(T data);
 }

@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
-public class GameManager : Subject, IObserver, IDataPersistance
+public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
 {
     [SerializeField] Subject playerSubject;
     [SerializeField] int currentScore;
@@ -13,7 +12,7 @@ public class GameManager : Subject, IObserver, IDataPersistance
 
     void Start()
     {
-        //ResetValues();
+        ResetValues();
     }
 
     void ResetValues()
@@ -27,7 +26,6 @@ public class GameManager : Subject, IObserver, IDataPersistance
         if (@event == Events.PassedPipe)
         {
             currentScore++;
-            Debug.Log($"GameManager - Updating score: {currentScore}");
             NotifyObservers(Events.PassedPipe, currentScore);
         }
         if (@event == Events.Jump)
@@ -38,30 +36,21 @@ public class GameManager : Subject, IObserver, IDataPersistance
         if (@event == Events.Die)
         {
             NotifyObservers(Events.Die);
-            CheckScore();
             DataPersistanceManager.Instance.SaveGame();
         }
     }
 
-    void CheckScore()
-    {
-        for (int i = 0; i < highScoreList.Count; i++)
-        {
-            if (highScoreList[i] < currentScore)
-            {
-                highScoreList.Add(currentScore);
-            }
-        }
-    }
 
     public void LoadData(PlayerData data)
     {
+        this.currentJump = data.totalJumps;
         this.currentScore = data.highScore;
     }
 
     public void SaveData(PlayerData data)
     {
         data.highScore = this.currentScore;
+        data.totalJumps += this.currentJump;
     }
 
     void OnEnable()

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -8,9 +7,9 @@ public class DataPersistanceManager : MonoBehaviour
     [Header("File Name")]
     [SerializeField] private string fileName;
 
-    private PlayerData data;
-    private List<IDataPersistance> dataPersistancesObjects;
+    private PlayerData playerData;
     private FileDataHandler dataHandler;
+    private List<IDataPersistance<PlayerData>> dataPersistancesObjects;
 
     private static DataPersistanceManager instance;
     public static DataPersistanceManager Instance { get { return instance; } }
@@ -31,21 +30,21 @@ public class DataPersistanceManager : MonoBehaviour
     private void Start()
     {
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
-        this.dataPersistancesObjects = FindAllDataPersistanceObjects();
+        this.dataPersistancesObjects = FindAllPlayerDataPersistanceObjects();
 
         LoadGame();
     }
 
     public void NewGame()
     {
-        this.data = new PlayerData();
+        this.playerData = new PlayerData();
     }
 
     public void LoadGame()
     {
-        this.data = dataHandler.Load();
+        this.playerData = dataHandler.Load<PlayerData>();
 
-        if (this.data == null)
+        if (this.playerData == null)
         {
             Debug.Log("No data found, creating new");
             NewGame();
@@ -53,7 +52,7 @@ public class DataPersistanceManager : MonoBehaviour
 
         foreach (var obj in dataPersistancesObjects)
         {
-            obj.LoadData(data);
+            obj.LoadData(playerData);
         }
     }
 
@@ -61,15 +60,15 @@ public class DataPersistanceManager : MonoBehaviour
     {
         foreach (var obj in dataPersistancesObjects)
         {
-            obj.SaveData(data);
+            obj.SaveData(playerData);
         }
-        dataHandler.Save(data);
+        dataHandler.Save(playerData);
     }
 
-    private List<IDataPersistance> FindAllDataPersistanceObjects()
+    private List<IDataPersistance<PlayerData>> FindAllPlayerDataPersistanceObjects()
     {
-        IEnumerable<IDataPersistance> dataPersistancesObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistance>();
+        IEnumerable<IDataPersistance<PlayerData>> dataPersistancesObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistance<PlayerData>>();
 
-        return new List<IDataPersistance>(dataPersistancesObjects);
+        return new List<IDataPersistance<PlayerData>>(dataPersistancesObjects);
     }
 }

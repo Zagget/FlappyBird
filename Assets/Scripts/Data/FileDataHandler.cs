@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FileDataHandler
 {
-    private string dataDirPath = "";
-    private string dataFileName = "";
+    private string dataDirPath;
+    private string dataFileName;
 
     public FileDataHandler(string dataDirPath, string dataFileName)
     {
@@ -13,54 +13,37 @@ public class FileDataHandler
         this.dataFileName = dataFileName;
     }
 
-    public PlayerData Load()
-    {
-        string fullPath = Path.Combine(dataDirPath, dataFileName);
-        PlayerData loadedData = null;
-        if (File.Exists(fullPath))
-        {
-            try
-            {
-                string dataToLoad = "";
-                using (FileStream stream = new FileStream(fullPath, FileMode.Open))
-                {
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
-                        dataToLoad = reader.ReadToEnd();
-                    }
-                }
-
-                loadedData = JsonUtility.FromJson<PlayerData>(dataToLoad);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Error when loading data from file {fullPath} /n {e}");
-            }
-        }
-        return loadedData;
-    }
-
-    public void Save(PlayerData data)
+    public void Save<T>(T data)
     {
         string fullPath = Path.Combine(dataDirPath, dataFileName);
         try
         {
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-
-            string dataToStore = JsonUtility.ToJson(data, true);
-
-            using (FileStream stream = new FileStream(fullPath, FileMode.Create))
-            {
-                using (StreamWriter write = new StreamWriter(stream))
-                {
-                    write.Write(dataToStore);
-                }
-            }
-            Debug.Log("Saving data");
+            string jsonData = JsonUtility.ToJson(data, true);
+            File.WriteAllText(fullPath, jsonData);
+            Debug.Log($"Saved data to {fullPath}");
         }
         catch (Exception e)
         {
-            Debug.LogError($"Error when trying to save data to file {fullPath} +/n {e}");
+            Debug.LogError($"Error saving data to {fullPath}: {e}");
         }
+    }
+
+    public T Load<T>()
+    {
+        string fullPath = Path.Combine(dataDirPath, dataFileName);
+        if (File.Exists(fullPath))
+        {
+            try
+            {
+                string jsonData = File.ReadAllText(fullPath);
+                return JsonUtility.FromJson<T>(jsonData);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error loading data from {fullPath}: {e}");
+            }
+        }
+        return default;
     }
 }
