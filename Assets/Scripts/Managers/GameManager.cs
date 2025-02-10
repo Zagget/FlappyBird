@@ -35,7 +35,7 @@ public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
         }
         if (@event == Events.Die)
         {
-            NotifyObservers(Events.Die);
+            NotifyObservers(Events.Die, currentScore);
             DataPersistanceManager.Instance.SaveGame();
         }
     }

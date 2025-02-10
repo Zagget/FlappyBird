@@ -8,7 +8,10 @@ public class LeaderboardManager : MonoBehaviour, IObserver, IDataPersistance<Lea
 
     public void OnNotify(Events @event, int value = 0)
     {
+        if (@event == Events.Die)
+        {
 
+        }
     }
 
     public void AddScore(string playerName, int score)

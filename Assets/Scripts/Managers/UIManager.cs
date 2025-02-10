@@ -8,6 +8,7 @@ public class UIManager : Subject, IObserver
 
     [Header("Text")]
     [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI noLeaderboardText;
 
     [Header("Overlays")]
     [SerializeField] GameObject inGameOverlay;
@@ -16,6 +17,7 @@ public class UIManager : Subject, IObserver
     [Header("Buttons")]
     [SerializeField] Button retry;
     [SerializeField] Button menu;
+    [SerializeField] Button enter;
 
     void Start()
     {
@@ -47,11 +49,7 @@ public class UIManager : Subject, IObserver
         if (@event == Events.Die)
         {
             GameOverOverlay();
-
-        }
-
-        if (@event == Events.NewHighScore)
-        {
+            ShowHighScores();
 
         }
     }
