@@ -1,18 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeaderboardManager : MonoBehaviour, IObserver, IDataPersistance<LeaderboardData>
+public class LeaderboardManager : MonoBehaviour, IDataPersistance<LeaderboardData>
 {
-    [SerializeField] private Subject gameManagerSubject;
     private List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
-
-    public void OnNotify(Events @event, int value = 0)
-    {
-        if (@event == Events.Die)
-        {
-
-        }
-    }
 
     public void AddScore(string playerName, int score)
     {
@@ -21,27 +12,32 @@ public class LeaderboardManager : MonoBehaviour, IObserver, IDataPersistance<Lea
 
         if (leaderboard.Count > 10)
         {
+            Debug.Log("More than 10 entries removed last entry");
             leaderboard.RemoveAt(leaderboard.Count - 1);
         }
+        Debug.Log($"Added Score for {playerName}, score: {score}");
+
+        Debug.Log("Current Leaderboard Data:");
+        for (int i = 0; i < leaderboard.Count; i++)
+        {
+            Debug.Log($"Name: {leaderboard[i].playerName} Score: {leaderboard[i].score.ToString()}");
+        }
+    }
+
+    public List<LeaderboardEntry> GetLeaderBoard()
+    {
+        return leaderboard;
     }
 
     public void LoadData(LeaderboardData data)
     {
-
+        Debug.Log("Loading leaderboard data");
+        data.LeaderBoardEntries = this.leaderboard;
     }
 
     public void SaveData(LeaderboardData data)
     {
-
-    }
-
-    private void OnEnable()
-    {
-        gameManagerSubject.AddObserver(this);
-    }
-
-    private void OnDisable()
-    {
-        gameManagerSubject.RemoveObserver(this);
+        Debug.Log("Saving leaderboard data");
+        this.leaderboard = data.LeaderBoardEntries;
     }
 }

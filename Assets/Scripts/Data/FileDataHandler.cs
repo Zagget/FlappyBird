@@ -21,7 +21,7 @@ public class FileDataHandler
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
             string jsonData = JsonUtility.ToJson(data, true);
             File.WriteAllText(fullPath, jsonData);
-            Debug.Log($"Saved data to {fullPath}");
+            Debug.Log($"Saved data  to {fullPath}");
         }
         catch (Exception e)
         {
