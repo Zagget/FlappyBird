@@ -7,6 +7,7 @@ public class LeaderboardManager : MonoBehaviour, IDataPersistance<LeaderboardDat
 
     public void AddScore(string playerName, int score)
     {
+        Debug.Log($"Adding Score for {playerName}, score: {score}");
         leaderboard.Add(new LeaderboardEntry(playerName, score));
         leaderboard.Sort((a, b) => b.score.CompareTo(a.score));
 
@@ -15,17 +16,13 @@ public class LeaderboardManager : MonoBehaviour, IDataPersistance<LeaderboardDat
             Debug.Log("More than 10 entries removed last entry");
             leaderboard.RemoveAt(leaderboard.Count - 1);
         }
-        Debug.Log($"Added Score for {playerName}, score: {score}");
-
-        Debug.Log("Current Leaderboard Data: \n----------------");
-        for (int i = 0; i < leaderboard.Count; i++)
-        {
-            Debug.Log($"Name: {leaderboard[i].playerName} Score: {leaderboard[i].score.ToString()}");
-        }
+        PrintLeaderboard();
     }
 
     public List<LeaderboardEntry> GetLeaderBoard()
     {
+        Debug.Log("In GetLeaderboard");
+        PrintLeaderboard();
         return leaderboard;
     }
 
@@ -40,5 +37,14 @@ public class LeaderboardManager : MonoBehaviour, IDataPersistance<LeaderboardDat
     {
         data.LeaderBoardEntries = new List<LeaderboardEntry>(leaderboard);
         Debug.Log($"Saving Data LeaderboardManager entries count: {data.LeaderBoardEntries.Count}");
+    }
+
+    public void PrintLeaderboard()
+    {
+        Debug.Log("Current Leaderboard Data: \n----------------");
+        for (int i = 0; i < leaderboard.Count; i++)
+        {
+            Debug.Log($"Name: {leaderboard[i].playerName} , Score: {leaderboard[i].score}");
+        }
     }
 }

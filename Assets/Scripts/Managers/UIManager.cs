@@ -80,7 +80,14 @@ public class UIManager : MonoBehaviour, IObserver
 
     void UpdateLeaderboard()
     {
-        List<LeaderboardEntry> leaderboard = leaderboardManager.GetLeaderBoard();
+        List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
+        leaderboard = leaderboardManager.GetLeaderBoard();
+
+        Debug.Log("In UIMANAGER");
+        for (int i = 0; i < leaderboard.Count; i++)
+        {
+            Debug.Log($"Name: {leaderboard[i].playerName} , Score: {leaderboard[i].score}");
+        }
 
         for (int i = 0; i < names.Count; i++)
         {
