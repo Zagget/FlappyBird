@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using Unity.VisualScripting;
 
 public class DataPersistanceManager : MonoBehaviour
 {
     [Header("File Name")]
-    [SerializeField] private string playerfileName;
-    [SerializeField] private string leaderboardfileName;
+    [SerializeField] private string playerFileName;
+    [SerializeField] private string leaderboardFileName;
 
     private PlayerData playerData;
     private LeaderboardData leaderboardData;
@@ -34,11 +33,11 @@ public class DataPersistanceManager : MonoBehaviour
 
     private void Start()
     {
-        this.playerDataHandler = new FileDataHandler(Application.persistentDataPath, playerfileName);
-        this.leaderboardDataHandler = new FileDataHandler(Application.persistentDataPath, leaderboardfileName);
+        this.playerDataHandler = new FileDataHandler(Application.persistentDataPath, playerFileName);
+        this.leaderboardDataHandler = new FileDataHandler(Application.persistentDataPath, leaderboardFileName);
 
-        this.playerDataObjects = FindAllPlayerDataPersistanceObjects();
-        this.leaderboarddataObjects = FindAllLeaderBoardDataPersistanceObjects();
+        this.playerDataObjects = FindAllPlayerDataObjects();
+        this.leaderboarddataObjects = FindAllLeaderBoardDataObjects();
 
         LoadPlayerData();
         LoadLeaderboardData();
@@ -66,6 +65,7 @@ public class DataPersistanceManager : MonoBehaviour
         {
             obj.LoadData(playerData);
         }
+        Debug.Log("Player data loaded");
     }
 
     public void LoadLeaderboardData()
@@ -81,6 +81,7 @@ public class DataPersistanceManager : MonoBehaviour
         {
             obj.LoadData(leaderboardData);
         }
+        Debug.Log("Leaderboard data loaded");
     }
 
     public void SavePlayerData()
@@ -101,14 +102,14 @@ public class DataPersistanceManager : MonoBehaviour
         leaderboardDataHandler.Save(leaderboardData);
     }
 
-    private List<IDataPersistance<PlayerData>> FindAllPlayerDataPersistanceObjects()
+    private List<IDataPersistance<PlayerData>> FindAllPlayerDataObjects()
     {
         IEnumerable<IDataPersistance<PlayerData>> dataPersistancesObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistance<PlayerData>>();
 
         return new List<IDataPersistance<PlayerData>>(dataPersistancesObjects);
     }
 
-    private List<IDataPersistance<LeaderboardData>> FindAllLeaderBoardDataPersistanceObjects()
+    private List<IDataPersistance<LeaderboardData>> FindAllLeaderBoardDataObjects()
     {
         IEnumerable<IDataPersistance<LeaderboardData>> dataPersistancesObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistance<LeaderboardData>>();
 

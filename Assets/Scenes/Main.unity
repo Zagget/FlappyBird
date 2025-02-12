@@ -1279,11 +1279,11 @@ MonoBehaviour:
   - {fileID: 1992209159}
   - {fileID: 356776483}
   scoreText: {fileID: 115277725}
-  leaderboardText: {fileID: 0}
+  scorePromptText: {fileID: 0}
   inGameOverlay: {fileID: 1588456633}
   diedOverlay: {fileID: 71048841}
   leaderBoardOverlay: {fileID: 1897182028}
-  AddleaderboardOverlay: {fileID: 897640425}
+  addLeaderboardOverlay: {fileID: 897640425}
   retry: {fileID: 1141098768}
   menu: {fileID: 241754143}
   enter: {fileID: 1651042153}
@@ -3464,8 +3464,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e415e7fe582eb7a44a82c6e4ace678bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerfileName: PlayerData.game
-  leaderboardfileName: LeaderboardData.game
+  playerFileName: PlayerData.Game
+  leaderboardFileName: LeaderboardData.Game
 --- !u!4 &1098146787
 Transform:
   m_ObjectHideFlags: 0
@@ -4696,7 +4696,6 @@ MonoBehaviour:
   highScore: 0
   currentJump: 0
   distance: 0
-  highScoreList: 
 --- !u!1 &1479943264
 GameObject:
   m_ObjectHideFlags: 0
@@ -6665,6 +6664,63 @@ MonoBehaviour:
   DeathSounds: {fileID: 11400000, guid: 828b2f9769350cb44a723d09f0e5de35, type: 2}
   FlapSounds: {fileID: 11400000, guid: 9594a01a1586d8e499465fe87ac83705, type: 2}
   PassedPipeSounds: {fileID: 11400000, guid: 10c036d122742d74d905e61f5e99d3c4, type: 2}
+--- !u!1001 &7985515301562498107
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1637109721055419234, guid: b606d440de1c9424480f8bf8e945e843, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637109721055419234, guid: b606d440de1c9424480f8bf8e945e843, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637109721055419234, guid: b606d440de1c9424480f8bf8e945e843, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637109721055419234, guid: b606d440de1c9424480f8bf8e945e843, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637109721055419234, guid: b606d440de1c9424480f8bf8e945e843, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637109721055419234, guid: b606d440de1c9424480f8bf8e945e843, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637109721055419234, guid: b606d440de1c9424480f8bf8e945e843, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637109721055419234, guid: b606d440de1c9424480f8bf8e945e843, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637109721055419234, guid: b606d440de1c9424480f8bf8e945e843, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637109721055419234, guid: b606d440de1c9424480f8bf8e945e843, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526880813056194422, guid: b606d440de1c9424480f8bf8e945e843, type: 3}
+      propertyPath: m_Name
+      value: Pipe
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b606d440de1c9424480f8bf8e945e843, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -6687,3 +6743,4 @@ SceneRoots:
   - {fileID: 629183542}
   - {fileID: 1990086126}
   - {fileID: 1098146787}
+  - {fileID: 7985515301562498107}

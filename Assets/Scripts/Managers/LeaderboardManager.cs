@@ -17,7 +17,7 @@ public class LeaderboardManager : MonoBehaviour, IDataPersistance<LeaderboardDat
         }
         Debug.Log($"Added Score for {playerName}, score: {score}");
 
-        Debug.Log("Current Leaderboard Data:");
+        Debug.Log("Current Leaderboard Data: \n----------------");
         for (int i = 0; i < leaderboard.Count; i++)
         {
             Debug.Log($"Name: {leaderboard[i].playerName} Score: {leaderboard[i].score.ToString()}");
@@ -31,13 +31,14 @@ public class LeaderboardManager : MonoBehaviour, IDataPersistance<LeaderboardDat
 
     public void LoadData(LeaderboardData data)
     {
-        Debug.Log("Loading leaderboard data");
-        data.LeaderBoardEntries = this.leaderboard;
+        leaderboard = new List<LeaderboardEntry>(data.LeaderBoardEntries);
+        Debug.Log($"Loading Data LeaderboardManager data entries count: {data.LeaderBoardEntries.Count} leaderboard entries count:{leaderboard.Count}");
+
     }
 
     public void SaveData(LeaderboardData data)
     {
-        Debug.Log("Saving leaderboard data");
-        this.leaderboard = data.LeaderBoardEntries;
+        data.LeaderBoardEntries = new List<LeaderboardEntry>(leaderboard);
+        Debug.Log($"Saving Data LeaderboardManager entries count: {data.LeaderBoardEntries.Count}");
     }
 }

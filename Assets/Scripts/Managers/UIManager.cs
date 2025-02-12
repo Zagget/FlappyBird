@@ -1,7 +1,6 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using Unity.PlasticSCM.Editor.WebApi;
 using System.Collections.Generic;
 
 public class UIManager : MonoBehaviour, IObserver
@@ -15,13 +14,13 @@ public class UIManager : MonoBehaviour, IObserver
 
     [Header("Text")]
     [SerializeField] TextMeshProUGUI scoreText;
-    [SerializeField] TextMeshProUGUI leaderboardText;
+    [SerializeField] TextMeshProUGUI scorePromptText;
 
     [Header("Overlays")]
     [SerializeField] GameObject inGameOverlay;
     [SerializeField] GameObject diedOverlay;
     [SerializeField] GameObject leaderBoardOverlay;
-    [SerializeField] GameObject AddleaderboardOverlay;
+    [SerializeField] GameObject addLeaderboardOverlay;
 
     [Header("Buttons")]
     [SerializeField] Button retry;
@@ -55,7 +54,7 @@ public class UIManager : MonoBehaviour, IObserver
         inGameOverlay.SetActive(false);
         diedOverlay.SetActive(true);
         leaderBoardOverlay.SetActive(true);
-        AddleaderboardOverlay.SetActive(true);
+        addLeaderboardOverlay.SetActive(true);
     }
 
     public void OnNotify(Events @event, int value)
@@ -91,10 +90,6 @@ public class UIManager : MonoBehaviour, IObserver
 
         for (int i = 0; i < leaderboard.Count; i++)
         {
-            if (leaderboard[i].playerName == null)
-            {
-                continue;
-            }
             names[i].text = leaderboard[i].playerName;
             scores[i].text = leaderboard[i].score.ToString();
         }
@@ -106,7 +101,7 @@ public class UIManager : MonoBehaviour, IObserver
         leaderboardManager.AddScore(name, score);
         UpdateLeaderboard();
         DataPersistanceManager.Instance.SaveLeaderboardData();
-        AddleaderboardOverlay.SetActive(false);
+        addLeaderboardOverlay.SetActive(false);
     }
 
 
@@ -114,6 +109,8 @@ public class UIManager : MonoBehaviour, IObserver
     {
         Debug.Log("Loading main game");
         SceneLoader.Instance.LoadScene(1);
+        DataPersistanceManager.Instance.LoadLeaderboardData();
+        DataPersistanceManager.Instance.LoadPlayerData();
     }
 
     void OnMenuClicked()

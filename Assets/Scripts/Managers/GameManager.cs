@@ -9,8 +9,6 @@ public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
     [SerializeField] private int currentJump;
     [SerializeField] private int distance;
 
-    [SerializeField] private List<int> highScoreList = new List<int>();
-
     private void Start()
     {
         ResetValues();
