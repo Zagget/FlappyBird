@@ -12,6 +12,8 @@ public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
     private void Start()
     {
         ResetValues();
+        Debug.Log("GM Start: Setup files");
+        DataPersistanceManager.Instance.UpdateAndLoad();
     }
 
     private void ResetValues()

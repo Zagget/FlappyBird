@@ -111,13 +111,10 @@ public class UIManager : MonoBehaviour, IObserver
         addLeaderboardOverlay.SetActive(false);
     }
 
-
     void OnRetryClicked()
     {
         Debug.Log("Loading main game");
         SceneLoader.Instance.LoadScene(1);
-        DataPersistanceManager.Instance.LoadLeaderboardData();
-        DataPersistanceManager.Instance.LoadPlayerData();
     }
 
     void OnMenuClicked()
@@ -130,6 +127,7 @@ public class UIManager : MonoBehaviour, IObserver
     {
         gameManagerSubject.AddObserver(this);
     }
+
     void OnDisable()
     {
         gameManagerSubject.RemoveObserver(this);

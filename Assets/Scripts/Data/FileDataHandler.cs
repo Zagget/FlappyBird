@@ -32,12 +32,19 @@ public class FileDataHandler
     public T Load<T>()
     {
         string fullPath = Path.Combine(dataDirPath, dataFileName);
+        Debug.Log($"Attempting to load file from path: {fullPath}");
         if (File.Exists(fullPath))
         {
             try
             {
                 string jsonData = File.ReadAllText(fullPath);
-                return JsonUtility.FromJson<T>(jsonData);
+                Debug.Log($"Loaded file from {fullPath}");
+                T result = JsonUtility.FromJson<T>(jsonData);
+                if (result == null)
+                {
+                    Debug.LogError($"Failed to parse the JSON data into {typeof(T)} from file: {fullPath}");
+                }
+                return result;
             }
             catch (Exception e)
             {

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class DataPersistanceManager : MonoBehaviour
 {
@@ -20,18 +21,17 @@ public class DataPersistanceManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+        if (instance != null && instance != this)
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
+            return;
         }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
+    public void UpdateAndLoad()
     {
         this.playerDataHandler = new FileDataHandler(Application.persistentDataPath, playerFileName);
         this.leaderboardDataHandler = new FileDataHandler(Application.persistentDataPath, leaderboardFileName);
@@ -86,20 +86,35 @@ public class DataPersistanceManager : MonoBehaviour
 
     public void SavePlayerData()
     {
-        foreach (var obj in playerDataObjects)
+        try
         {
-            obj.SaveData(playerData);
+            foreach (var obj in playerDataObjects)
+            {
+                obj.SaveData(playerData);
+            }
+            playerDataHandler.Save(playerData);
+            Debug.Log("Player data saved successfully.");
         }
-        playerDataHandler.Save(playerData);
+        catch (Exception e)
+        {
+            Debug.LogError($"Error saving player data: {e.Message}");
+        }
     }
 
     public void SaveLeaderboardData()
     {
-        foreach (var obj in leaderboarddataObjects)
+        try
         {
-            obj.SaveData(leaderboardData);
+            foreach (var obj in leaderboarddataObjects)
+            {
+                obj.SaveData(leaderboardData);
+            }
+            leaderboardDataHandler.Save(leaderboardData);
         }
-        leaderboardDataHandler.Save(leaderboardData);
+        catch (Exception e)
+        {
+            Debug.LogError($"Error saving leaderboard data: {e.Message}");
+        }
     }
 
     private List<IDataPersistance<PlayerData>> FindAllPlayerDataObjects()
@@ -115,4 +130,5 @@ public class DataPersistanceManager : MonoBehaviour
 
         return new List<IDataPersistance<LeaderboardData>>(dataPersistancesObjects);
     }
+
 }
