@@ -1,11 +1,9 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
 {
     [SerializeField] private Subject playerSubject;
     [SerializeField] private int currentScore;
-    [SerializeField] private int highScore;
     [SerializeField] private int currentJump;
     [SerializeField] private int distance;
 
@@ -28,6 +26,7 @@ public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
         if (@event == Events.PassedPipe)
         {
             currentScore++;
+            Debug.Log($"GM currentScore {currentScore}");
             distance += 5;
             NotifyObservers(Events.PassedPipe, currentScore);
         }
@@ -46,13 +45,11 @@ public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
     public void LoadData(PlayerData data)
     {
         this.currentJump = data.totalJumps;
-        this.currentScore = data.highScore;
         this.distance = data.distance;
     }
 
     public void SaveData(PlayerData data)
     {
-        data.highScore = this.currentScore;
         data.totalJumps += this.currentJump;
         data.distance += this.distance;
     }

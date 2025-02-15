@@ -25,12 +25,10 @@ public class LeaderboardManager : MonoBehaviour, IDataPersistance<LeaderboardDat
     public void LoadData(LeaderboardData data)
     {
         leaderboard = new List<LeaderboardEntry>(data.LeaderBoardEntries);
-        Debug.Log($"LM Loading Data saved count: {data.LeaderBoardEntries.Count} local count:{leaderboard.Count}");
     }
 
     public void SaveData(LeaderboardData data)
     {
         data.LeaderBoardEntries = new List<LeaderboardEntry>(leaderboard);
-        Debug.Log($"LM Saving Data saved count: {data.LeaderBoardEntries.Count}");
     }
 }
