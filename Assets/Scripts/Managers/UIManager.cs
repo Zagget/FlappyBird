@@ -64,15 +64,14 @@ public class UIManager : MonoBehaviour, IObserver
 
     }
 
-    public void OnNotify(PlayerActions @event, int value)
+    public void OnNotify(PlayerActions action, int value)
     {
-        if (@event == PlayerActions.PassedPipe)
+        if (action == PlayerActions.PassedPipe)
         {
-            Debug.Log($"UIM passedpipe value {value}");
             UpdateScore(value);
         }
 
-        if (@event == PlayerActions.Die)
+        if (action == PlayerActions.Die)
         {
             GameOverOverlay();
             UpdateLeaderboard();
@@ -87,8 +86,8 @@ public class UIManager : MonoBehaviour, IObserver
 
     void UpdateLeaderboard()
     {
-        List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
-        leaderboard = leaderboardManager.GetLeaderBoard();
+        //List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
+        List<LeaderboardEntry> leaderboard = leaderboardManager.GetLeaderBoard();
 
         for (int i = 0; i < names.Count; i++)
         {
@@ -107,6 +106,7 @@ public class UIManager : MonoBehaviour, IObserver
     {
         string name = nameField.text;
         int length = name.Length;
+
         if (string.IsNullOrWhiteSpace(name))
         {
             StartCoroutine(ShowPromptForDuration(5f, "Please Enter a name."));
@@ -163,13 +163,11 @@ public class UIManager : MonoBehaviour, IObserver
 
     void OnRetryClicked()
     {
-        Debug.Log("Loading main game");
         SceneLoader.Instance.LoadScene(1);
     }
 
     void OnMenuClicked()
     {
-        Debug.Log("Loading menu");
         SceneLoader.Instance.LoadScene(0);
     }
 

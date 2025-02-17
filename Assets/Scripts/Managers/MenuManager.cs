@@ -6,17 +6,24 @@ public class MenuManager : MonoBehaviour, IDataPersistance<PlayerData>
     [SerializeField] private GameObject statsOverlay;
     [SerializeField] private TextMeshProUGUI statsText;
 
-
     private int jumps;
     private int distance;
     private int passedPipes;
 
     private bool showStats = false;
 
+
+
     private void Start()
     {
+
         statsOverlay.SetActive(showStats);
         DataPersistanceManager.Instance.UpdateAndLoad();
+    }
+
+    public void Play()
+    {
+        SceneLoader.Instance.LoadScene(1);
     }
 
     public void Stats()
@@ -36,7 +43,6 @@ public class MenuManager : MonoBehaviour, IDataPersistance<PlayerData>
 
     public void SaveData(PlayerData data)
     {
-        // Nothing to save here
     }
 
     public void Exit()

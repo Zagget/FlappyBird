@@ -62,6 +62,11 @@ public class BackGroundManager : MonoBehaviour, IObserver
         }
     }
 
+    private void ChangeBackground()
+    {
+
+    }
+
     private void OnEnable()
     {
         if (gameManagerSubject == null) return;

@@ -56,6 +56,7 @@ public class PipeManager : MonoBehaviour, IObserver
         Vector3 spawnPoint = GetSpawnPoint();
 
         var spawnedPipe = Instantiate(pipe, spawnPoint, Quaternion.identity);
+        spawnedPipe.transform.SetParent(transform);
         spawnedPipes.Add(spawnedPipe);
     }
 

@@ -17,8 +17,9 @@ public class BackgroundImage : MonoBehaviour
 
     void SetupTexture()
     {
-        float scale = transform.localScale.x;
         Sprite sprite = GetComponent<SpriteRenderer>().sprite;
+
+        float scale = transform.localScale.x;
         singleTextureWidth = sprite.texture.width / sprite.pixelsPerUnit * scale;
     }
 
