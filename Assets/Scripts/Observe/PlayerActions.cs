@@ -1,7 +1,6 @@
-public enum Events
+public enum PlayerActions
 {
     Jump,
     Die,
     PassedPipe,
-    NewHighScore,
 }

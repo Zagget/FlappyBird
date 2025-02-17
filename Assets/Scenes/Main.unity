@@ -2496,6 +2496,7 @@ MonoBehaviour:
   - {fileID: 3458748360565421235, guid: 5a194f1e4b6b41243b2933a0f4f4ee9c, type: 3}
   - {fileID: 6028584372027757672, guid: 18937123c9ed67142bb0b6493192db6e, type: 3}
   scrollLeft: 1
+  move: 1
   gameManagerSubject: {fileID: 1449345719}
 --- !u!1 &620247957
 GameObject:
@@ -4905,9 +4906,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSubject: {fileID: 513562028}
-  currentScore: 0
-  currentJump: 0
-  distance: 0
 --- !u!1 &1479943264
 GameObject:
   m_ObjectHideFlags: 0
@@ -6882,10 +6880,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 1551275304}
-  - {fileID: 629183542}
-  - {fileID: 1990086126}
-  - {fileID: 1098146787}
-  - {fileID: 1543831877}
   - {fileID: 513562027}
   - {fileID: 474666424}
   - {fileID: 2085837712}
@@ -6898,3 +6892,7 @@ SceneRoots:
   - {fileID: 578591810}
   - {fileID: 620247960}
   - {fileID: 545579710}
+  - {fileID: 1543831877}
+  - {fileID: 629183542}
+  - {fileID: 1990086126}
+  - {fileID: 1098146787}

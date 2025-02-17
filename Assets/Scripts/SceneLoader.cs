@@ -24,15 +24,4 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene(scene);
     }
-
-    public void Exit()
-    {
-#if UNITY_EDITOR
-        // If running in the Unity editor
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-            // If running as a standalone build
-            Application.Quit();
-#endif
-    }
 }

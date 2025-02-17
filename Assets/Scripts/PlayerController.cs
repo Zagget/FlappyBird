@@ -38,7 +38,7 @@ public class PlayerController : Subject
 
         rb.AddForce(Vector2.up * upwardForce, ForceMode2D.Impulse);
 
-        NotifyObservers(Events.Jump);
+        NotifyObservers(PlayerActions.Jump);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -46,7 +46,7 @@ public class PlayerController : Subject
         if (other.CompareTag("Pipe"))
         {
             Debug.Log("Player Died");
-            NotifyObservers(Events.Die);
+            NotifyObservers(PlayerActions.Die);
             Destroy(gameObject);
             return;
         }
@@ -54,7 +54,7 @@ public class PlayerController : Subject
         if (other.CompareTag("PassedPipe"))
         {
             Debug.Log("Player passed a pipe");
-            NotifyObservers(Events.PassedPipe);
+            NotifyObservers(PlayerActions.PassedPipe);
         }
     }
 
@@ -65,7 +65,7 @@ public class PlayerController : Subject
         if (other.CompareTag("Bounds"))
         {
             Debug.Log("Player got outside bounds");
-            NotifyObservers(Events.Die);
+            NotifyObservers(PlayerActions.Die);
             Destroy(gameObject);
         }
     }

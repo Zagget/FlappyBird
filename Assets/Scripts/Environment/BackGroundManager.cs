@@ -4,13 +4,13 @@ using UnityEngine;
 public class BackGroundManager : MonoBehaviour, IObserver
 {
     [Header("BackgroundImages")]
-    [SerializeField] List<GameObject> ImagePrefabs = new List<GameObject>();
-    List<BackgroundImage> backgroundImages = new List<BackgroundImage>();
+    [SerializeField] private List<GameObject> ImagePrefabs = new List<GameObject>();
 
-    [SerializeField] bool scrollLeft;
-    [SerializeField] Subject gameManagerSubject;
+    [SerializeField] private bool scrollLeft;
+    [SerializeField] private bool move = true;
 
-    bool move = true;
+    [SerializeField] private Subject gameManagerSubject;
+    private List<BackgroundImage> backgroundImages = new List<BackgroundImage>();
 
     void Start()
     {
@@ -24,18 +24,22 @@ public class BackGroundManager : MonoBehaviour, IObserver
         {
             GameObject background = Instantiate(ImagePrefabs[i]);
             background.transform.SetParent(transform);
+
             BackgroundImage bgImage = background.GetComponent<BackgroundImage>();
-            if (bgImage != null)
+            if (bgImage == null)
             {
-                bgImage.SetScrollDirection(scrollLeft);
-                backgroundImages.Add(bgImage);
+                Debug.LogError($"bgImage is null in imageprefabs, ListNumber: {i}");
+                continue;
             }
+
+            bgImage.SetScrollDirection(scrollLeft);
+            backgroundImages.Add(bgImage);
         }
     }
 
-    public void OnNotify(Events @event, int value = 0)
+    public void OnNotify(PlayerActions @event, int value = 0)
     {
-        if (@event == Events.Die)
+        if (@event == PlayerActions.Die)
         {
             move = false;
         }
@@ -58,13 +62,17 @@ public class BackGroundManager : MonoBehaviour, IObserver
         }
     }
 
-
     private void OnEnable()
     {
+        if (gameManagerSubject == null) return;
+
         gameManagerSubject.AddObserver(this);
     }
+
     private void OnDisable()
     {
+        if (gameManagerSubject == null) return;
+
         gameManagerSubject.RemoveObserver(this);
     }
 }

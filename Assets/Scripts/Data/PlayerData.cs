@@ -1,13 +1,13 @@
 [System.Serializable]
 public class PlayerData
 {
-    public int score;
+    public int totalPassedPipes;
     public int totalJumps;
     public int distance;
 
     public PlayerData()
     {
-        score = 0;
+        totalPassedPipes = 0;
         totalJumps = 0;
         distance = 0;
     }

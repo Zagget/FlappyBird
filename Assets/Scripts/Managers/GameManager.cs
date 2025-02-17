@@ -3,9 +3,10 @@ using UnityEngine;
 public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
 {
     [SerializeField] private Subject playerSubject;
-    [SerializeField] private int currentScore;
-    [SerializeField] private int currentJump;
-    [SerializeField] private int distance;
+
+    private int currentScore;
+    private int currentJump;
+    private int distance;
 
     private void Start()
     {
@@ -21,35 +22,34 @@ public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
         distance = 0;
     }
 
-    public void OnNotify(Events @event, int value = 0)
+    public void OnNotify(PlayerActions action, int value = 0)
     {
-        if (@event == Events.PassedPipe)
+        if (action == PlayerActions.PassedPipe)
         {
             currentScore++;
             Debug.Log($"GM currentScore {currentScore}");
             distance += 5;
-            NotifyObservers(Events.PassedPipe, currentScore);
+            NotifyObservers(PlayerActions.PassedPipe, currentScore);
         }
-        if (@event == Events.Jump)
+        if (action == PlayerActions.Jump)
         {
             currentJump++;
-            NotifyObservers(Events.Jump);
+            NotifyObservers(PlayerActions.Jump);
         }
-        if (@event == Events.Die)
+        if (action == PlayerActions.Die)
         {
-            NotifyObservers(Events.Die, currentScore);
+            NotifyObservers(PlayerActions.Die, currentScore);
             DataPersistanceManager.Instance.SavePlayerData();
         }
     }
 
     public void LoadData(PlayerData data)
     {
-        this.currentJump = data.totalJumps;
-        this.distance = data.distance;
     }
 
     public void SaveData(PlayerData data)
     {
+        data.totalPassedPipes += this.currentScore;
         data.totalJumps += this.currentJump;
         data.distance += this.distance;
     }

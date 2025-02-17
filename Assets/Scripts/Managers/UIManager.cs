@@ -3,8 +3,6 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
-using System;
-using Unity.VisualScripting;
 
 public class UIManager : MonoBehaviour, IObserver
 {
@@ -66,15 +64,15 @@ public class UIManager : MonoBehaviour, IObserver
 
     }
 
-    public void OnNotify(Events @event, int value)
+    public void OnNotify(PlayerActions @event, int value)
     {
-        if (@event == Events.PassedPipe)
+        if (@event == PlayerActions.PassedPipe)
         {
             Debug.Log($"UIM passedpipe value {value}");
             UpdateScore(value);
         }
 
-        if (@event == Events.Die)
+        if (@event == PlayerActions.Die)
         {
             GameOverOverlay();
             UpdateLeaderboard();

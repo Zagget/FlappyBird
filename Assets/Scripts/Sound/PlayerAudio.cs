@@ -8,19 +8,19 @@ public class PlayerAudio : MonoBehaviour, IObserver
     [SerializeField] SoundData PassedPipeSounds;
 
 
-    public void OnNotify(Events action, int value = 0)
+    public void OnNotify(PlayerActions action, int value = 0)
     {
-        if (action == Events.Die)
+        if (action == PlayerActions.Die)
         {
             SoundManager.Instance.PlayRandomSound(DeathSounds);
         }
 
-        if (action == Events.Jump)
+        if (action == PlayerActions.Jump)
         {
             SoundManager.Instance.PlayRandomSound(FlapSounds);
         }
 
-        if (action == Events.PassedPipe)
+        if (action == PlayerActions.PassedPipe)
         {
             SoundManager.Instance.PlayRandomSound(PassedPipeSounds);
         }
