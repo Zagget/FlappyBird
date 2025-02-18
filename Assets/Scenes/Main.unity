@@ -1731,7 +1731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &513562026
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2025,7 +2025,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.7686275, g: 0.7686275, b: 0.7686275, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2457,16 +2457,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29b8972754f58524298d3a967745af8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ImagePrefabs:
-  - {fileID: 6237668557277897853, guid: b57fded48ae8fcf489d7b03cd2cf7438, type: 3}
+  levelOneImagePrefabs:
   - {fileID: 6500771685468414412, guid: 02abaf8cd3e555c4cb300dc27ab3ec1a, type: 3}
   - {fileID: 4587416499896513809, guid: 1e2de59e2f9ed4046ae990589a8363b4, type: 3}
   - {fileID: 4714377310346137445, guid: 53b815204a4392f45bd47514b732ee97, type: 3}
   - {fileID: 1161550775443835473, guid: 483247dcb28a37c4488733bfc7f63511, type: 3}
   - {fileID: 3458748360565421235, guid: 5a194f1e4b6b41243b2933a0f4f4ee9c, type: 3}
   - {fileID: 6028584372027757672, guid: 18937123c9ed67142bb0b6493192db6e, type: 3}
+  - {fileID: 6237668557277897853, guid: b57fded48ae8fcf489d7b03cd2cf7438, type: 3}
+  levelTwoImagePrefabs:
+  - {fileID: 4587416499896513809, guid: a16a573bf7b85fd4bbfeae82d3744286, type: 3}
+  - {fileID: 4714377310346137445, guid: 2ebffa315dfc5934e9f7d80911c1169f, type: 3}
+  - {fileID: 1161550775443835473, guid: 8713dd22e0cdb3449b33b94522b8e16f, type: 3}
+  - {fileID: 3458748360565421235, guid: acc1df60ec43b4c4396b6de21e660504, type: 3}
+  - {fileID: 6028584372027757672, guid: 6d29b80e9fe964f4d903382bafa1fc20, type: 3}
+  - {fileID: 6237668557277897853, guid: ed938313b0d2bf041a6d5fff20b32f87, type: 3}
   scrollLeft: 1
   move: 1
+  fadeDuration: 2
   gameManagerSubject: {fileID: 1449345719}
 --- !u!1 &620247957
 GameObject:

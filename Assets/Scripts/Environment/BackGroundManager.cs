@@ -1,39 +1,65 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class BackGroundManager : MonoBehaviour, IObserver
 {
-    [Header("BackgroundImages")]
-    [SerializeField] private List<GameObject> ImagePrefabs = new List<GameObject>();
+    [Header("BackgroundPrefabs")]
+    [SerializeField] private List<GameObject> levelOneImagePrefabs = new List<GameObject>();
+    [SerializeField] private List<GameObject> levelTwoImagePrefabs = new List<GameObject>();
 
+    [Header("Background config")]
     [SerializeField] private bool scrollLeft;
     [SerializeField] private bool move = true;
+    [SerializeField] private float fadeDuration;
 
     [SerializeField] private Subject gameManagerSubject;
-    private List<BackgroundImage> backgroundImages = new List<BackgroundImage>();
 
-    void Start()
+    private List<GameObject> currentBackgrounds = new List<GameObject>();
+    private List<ImageMovement> imageMovements = new List<ImageMovement>();
+
+    private void Start()
     {
-        SetUpImages();
+        SetUpBackground(levelOneImagePrefabs);
     }
 
-    void SetUpImages()
+    private void SetUpBackground(List<GameObject> bgPrefabs)
     {
-        backgroundImages.Clear();
-        for (int i = 0; i < ImagePrefabs.Count; i++)
-        {
-            GameObject background = Instantiate(ImagePrefabs[i]);
-            background.transform.SetParent(transform);
+        ClearBackground();
 
-            BackgroundImage bgImage = background.GetComponent<BackgroundImage>();
-            if (bgImage == null)
+        for (int i = 0; i < bgPrefabs.Count; i++)
+        {
+            GameObject spawnedBackground = Instantiate(bgPrefabs[i]);
+            spawnedBackground.transform.SetParent(transform);
+
+            ImageMovement imageMov = spawnedBackground.GetComponent<ImageMovement>();
+            if (imageMov == null)
             {
-                Debug.LogError($"bgImage is null in imageprefabs, ListNumber: {i}");
+                Debug.LogError($"imageMov is null in {bgPrefabs}, ListNumber: {i}");
                 continue;
             }
 
-            bgImage.SetScrollDirection(scrollLeft);
-            backgroundImages.Add(bgImage);
+            imageMov.SetScrollDirection(scrollLeft);
+            imageMovements.Add(imageMov);
+            currentBackgrounds.Add(spawnedBackground);
+        }
+    }
+
+    private void ClearBackground()
+    {
+        if (currentBackgrounds.Count > 0)
+        {
+            foreach (var obj in currentBackgrounds)
+            {
+                Destroy(obj);
+            }
+            foreach (var obj in imageMovements)
+            {
+                Destroy(obj);
+            }
+
+            currentBackgrounds.Clear();
+            imageMovements.Clear();
         }
     }
 
@@ -51,20 +77,74 @@ public class BackGroundManager : MonoBehaviour, IObserver
         {
             MoveBackground();
         }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log("Pressed T");
+            ChangeBackground(currentBackgrounds, levelTwoImagePrefabs);
+        }
     }
 
     private void MoveBackground()
     {
-        foreach (var backgroundImage in backgroundImages)
+        foreach (var mov in imageMovements)
         {
-            backgroundImage.Scroll();
-            backgroundImage.CheckReset();
+            mov.Scroll();
+            mov.CheckReset();
         }
     }
 
-    private void ChangeBackground()
+    private void ChangeBackground(List<GameObject> currentBackground, List<GameObject> toBackground)
     {
+        StartCoroutine(ChangeBackgroundRoutine(currentBackground, toBackground));
+    }
 
+    private IEnumerator ChangeBackgroundRoutine(List<GameObject> currentBackground, List<GameObject> toBackground)
+    {
+        foreach (var obj in currentBackground)
+        {
+            SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+            if (sr == null)
+            {
+                Debug.LogError("SpriteRender null");
+                continue;
+            }
+
+            StartCoroutine(Fade(sr, 1, 0));
+        }
+        yield return new WaitForSeconds(fadeDuration);
+
+        SetUpBackground(toBackground);
+
+        foreach (var obj in toBackground)
+        {
+            SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+            if (sr == null)
+            {
+                Debug.LogError("SpriteRender null");
+                continue;
+            }
+            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0f);
+            StartCoroutine(Fade(sr, 0, 1));
+        }
+        //yield return new WaitForSeconds(fadeDuration);
+    }
+
+    private IEnumerator Fade(SpriteRenderer sr, float startAlpha, float endAlpha)
+    {
+        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, startAlpha);
+
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / fadeDuration);
+
+            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, alpha);
+
+            yield return null;
+        }
+        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, endAlpha);
     }
 
     private void OnEnable()

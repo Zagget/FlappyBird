@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BackgroundImage : MonoBehaviour
+public class ImageMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
     float singleTextureWidth;
