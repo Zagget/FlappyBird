@@ -64,14 +64,14 @@ public class UIManager : MonoBehaviour, IObserver
 
     }
 
-    public void OnNotify(PlayerActions action, int value)
+    public void OnNotify(Events action, int value)
     {
-        if (action == PlayerActions.PassedPipe)
+        if (action == Events.PassedPipe)
         {
             UpdateScore(value);
         }
 
-        if (action == PlayerActions.Die)
+        if (action == Events.Die)
         {
             GameOverOverlay();
             UpdateLeaderboard();

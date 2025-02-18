@@ -22,29 +22,32 @@ public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
         distance = 0;
     }
 
-    public void OnNotify(PlayerActions action, int value = 0)
+    public void OnNotify(Events action, int value = 0)
     {
-        if (action == PlayerActions.PassedPipe)
+        if (action == Events.PassedPipe)
         {
             currentScore++;
-            Debug.Log($"GM currentScore {currentScore}");
             distance += 5;
-            NotifyObservers(PlayerActions.PassedPipe, currentScore);
+            NotifyObservers(Events.PassedPipe, currentScore);
+
+            if (currentScore == 20) NotifyObservers(Events.Level2);
+            if (currentScore == 40) NotifyObservers(Events.Level3);
         }
-        if (action == PlayerActions.Jump)
+        if (action == Events.Jump)
         {
             currentJump++;
-            NotifyObservers(PlayerActions.Jump);
+            NotifyObservers(Events.Jump);
         }
-        if (action == PlayerActions.Die)
+        if (action == Events.Die)
         {
-            NotifyObservers(PlayerActions.Die, currentScore);
+            NotifyObservers(Events.Die, currentScore);
             DataPersistanceManager.Instance.SavePlayerData();
         }
     }
 
     public void LoadData(PlayerData data)
     {
+
     }
 
     public void SaveData(PlayerData data)

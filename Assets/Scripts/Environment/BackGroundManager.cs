@@ -7,6 +7,7 @@ public class BackGroundManager : MonoBehaviour, IObserver
     [Header("BackgroundPrefabs")]
     [SerializeField] private List<GameObject> levelOneImagePrefabs = new List<GameObject>();
     [SerializeField] private List<GameObject> levelTwoImagePrefabs = new List<GameObject>();
+    [SerializeField] private List<GameObject> levelThreeImagePrefabs = new List<GameObject>();
 
     [Header("Background config")]
     [SerializeField] private bool scrollLeft;
@@ -21,6 +22,7 @@ public class BackGroundManager : MonoBehaviour, IObserver
     private void Start()
     {
         SetUpBackground(levelOneImagePrefabs);
+        ChangeBackground(currentBackgrounds, levelTwoImagePrefabs);
     }
 
     private void SetUpBackground(List<GameObject> bgPrefabs)
@@ -63,11 +65,21 @@ public class BackGroundManager : MonoBehaviour, IObserver
         }
     }
 
-    public void OnNotify(PlayerActions @event, int value = 0)
+    public void OnNotify(Events @event, int value = 0)
     {
-        if (@event == PlayerActions.Die)
+        if (@event == Events.Die)
         {
             move = false;
+        }
+
+        if (@event == Events.Level2)
+        {
+            ChangeBackground(currentBackgrounds, levelTwoImagePrefabs);
+        }
+
+        if (@event == Events.Level3)
+        {
+            ChangeBackground(currentBackgrounds, levelThreeImagePrefabs);
         }
     }
 
@@ -76,12 +88,6 @@ public class BackGroundManager : MonoBehaviour, IObserver
         if (move)
         {
             MoveBackground();
-        }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Debug.Log("Pressed T");
-            ChangeBackground(currentBackgrounds, levelTwoImagePrefabs);
         }
     }
 

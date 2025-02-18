@@ -24,9 +24,9 @@ public class PipeManager : MonoBehaviour, IObserver
     private bool move = true;
 
 
-    public void OnNotify(PlayerActions action, int value)
+    public void OnNotify(Events action, int value)
     {
-        if (action == PlayerActions.Die)
+        if (action == Events.Die)
         {
             move = false;
         }
