@@ -116,7 +116,7 @@ public class BackGroundManager : MonoBehaviour, IObserver
 
         SetUpBackground(toBackground);
 
-        foreach (var obj in toBackground)
+        foreach (var obj in currentBackgrounds)
         {
             SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
             if (sr == null)
