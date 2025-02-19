@@ -32,7 +32,6 @@ public class FileDataHandler
     public T Load<T>()
     {
         string fullPath = Path.Combine(dataDirPath, dataFileName);
-        Debug.Log($"Attempting to load file from path: {fullPath}");
         if (File.Exists(fullPath))
         {
             try

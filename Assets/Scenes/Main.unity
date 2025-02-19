@@ -1731,7 +1731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &513562026
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4831,6 +4831,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSubject: {fileID: 513562028}
+  level2: 15
+  level3: 40
 --- !u!1 &1479943264
 GameObject:
   m_ObjectHideFlags: 0
@@ -6560,7 +6562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: 1
-  background: 1
+  background: 0.1
   mixer: {fileID: 24100000, guid: 10979328700eff0419d1ada5f4311787, type: 2}
 --- !u!4 &1990086126
 Transform:
@@ -6758,9 +6760,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManagerSubject: {fileID: 1449345719}
+  BackgroundMusic: {fileID: 11400000, guid: 547112a82da05cb49b409ee4e4e2f9ca, type: 2}
   DeathSounds: {fileID: 11400000, guid: 828b2f9769350cb44a723d09f0e5de35, type: 2}
   FlapSounds: {fileID: 11400000, guid: 9594a01a1586d8e499465fe87ac83705, type: 2}
   PassedPipeSounds: {fileID: 11400000, guid: 10c036d122742d74d905e61f5e99d3c4, type: 2}
+  NewLevelSounds: {fileID: 11400000, guid: 2088d6c702ace1e479dfddc427d0aa99, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

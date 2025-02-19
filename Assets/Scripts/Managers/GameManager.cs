@@ -3,7 +3,8 @@ using UnityEngine;
 public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
 {
     [SerializeField] private Subject playerSubject;
-
+    [SerializeField] private int level2;
+    [SerializeField] private int level3;
     private int currentScore;
     private int currentJump;
     private int distance;
@@ -30,8 +31,8 @@ public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
             distance += 5;
             NotifyObservers(Events.PassedPipe, currentScore);
 
-            if (currentScore == 20) NotifyObservers(Events.Level2);
-            if (currentScore == 40) NotifyObservers(Events.Level3);
+            if (currentScore == level2) NotifyObservers(Events.Level2);
+            if (currentScore == level3) NotifyObservers(Events.Level3);
         }
         if (action == Events.Jump)
         {

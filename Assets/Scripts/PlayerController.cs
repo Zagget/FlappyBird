@@ -6,14 +6,14 @@ public class PlayerController : Subject
 
     private Rigidbody2D rb;
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0) || TouchInput())
+        if (Input.GetMouseButtonDown(0) || TouchInput())
         {
             Flap();
         }
@@ -41,7 +41,7 @@ public class PlayerController : Subject
         NotifyObservers(Events.Jump);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Pipe"))
         {
@@ -58,7 +58,7 @@ public class PlayerController : Subject
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (gameObject == null) return;
 

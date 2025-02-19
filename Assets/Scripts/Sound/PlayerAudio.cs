@@ -3,10 +3,17 @@ using UnityEngine;
 public class PlayerAudio : MonoBehaviour, IObserver
 {
     [SerializeField] Subject gameManagerSubject;
+
+    [SerializeField] SoundData BackgroundMusic;
     [SerializeField] SoundData DeathSounds;
     [SerializeField] SoundData FlapSounds;
     [SerializeField] SoundData PassedPipeSounds;
+    [SerializeField] SoundData NewLevelSounds;
 
+    private void Start()
+    {
+        SoundManager.Instance.PlayRandomSound(BackgroundMusic);
+    }
 
     public void OnNotify(Events action, int value = 0)
     {
@@ -23,6 +30,11 @@ public class PlayerAudio : MonoBehaviour, IObserver
         if (action == Events.PassedPipe)
         {
             SoundManager.Instance.PlayRandomSound(PassedPipeSounds);
+        }
+
+        if (action == Events.Level2 || action == Events.Level3)
+        {
+            SoundManager.Instance.PlayRandomSound(NewLevelSounds);
         }
     }
 

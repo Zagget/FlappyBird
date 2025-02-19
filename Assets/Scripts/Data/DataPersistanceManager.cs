@@ -43,22 +43,13 @@ public class DataPersistanceManager : MonoBehaviour
         LoadLeaderboardData();
     }
 
-    public void NewPlayerData()
-    {
-        this.playerData = new PlayerData();
-    }
-    public void NewLeaderBoardData()
-    {
-        this.leaderboardData = new LeaderboardData();
-    }
-
     public void LoadPlayerData()
     {
         this.playerData = playerDataHandler.Load<PlayerData>();
         if (this.playerData == null)
         {
             Debug.Log("No player data found, creating new");
-            NewPlayerData();
+            this.playerData = new PlayerData();
         }
 
         foreach (var obj in playerDataObjects)
@@ -74,7 +65,7 @@ public class DataPersistanceManager : MonoBehaviour
         if (this.leaderboardData == null)
         {
             Debug.Log("No leaderboard data found, creating new");
-            NewLeaderBoardData();
+            this.leaderboardData = new LeaderboardData();
         }
 
         foreach (var obj in leaderboarddataObjects)
@@ -130,5 +121,4 @@ public class DataPersistanceManager : MonoBehaviour
 
         return new List<IDataPersistance<LeaderboardData>>(dataPersistancesObjects);
     }
-
 }

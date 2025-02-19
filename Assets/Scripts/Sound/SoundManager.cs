@@ -18,9 +18,9 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] AudioMixer mixer;
 
-    // Audiosources so no sound gets cut off.
     private int currentAudioSourceIndex = 0;
     private List<AudioSource> audioSources;
+    private AudioSource backgroundSource;
 
     private void Awake()
     {
@@ -44,6 +44,8 @@ public class SoundManager : MonoBehaviour
             audioSources.Add(source);
         }
 
+        backgroundSource = gameObject.AddComponent<AudioSource>();
+
         SetAudioMixerVolume();
     }
 
@@ -59,30 +61,11 @@ public class SoundManager : MonoBehaviour
     public void PlayRandomSound(SoundData soundData)
     {
         bool empty = CheckIfSoundDataEmpty(soundData);
-        if (empty)
-        {
-            return;
-        }
+        if (empty) return;
 
         SoundData.SoundEntry randomEntry = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
 
         PlayClip(randomEntry.clip, randomEntry.loop, randomEntry.mixer);
-    }
-
-    private void PlayClip(AudioClip clip, bool loop, AudioMixerGroup mixer)
-    {
-        AudioSource currentSource = audioSources[currentAudioSourceIndex];
-
-        // Set audio clip and settings
-        currentSource.clip = clip;
-        currentSource.loop = loop;
-        currentSource.outputAudioMixerGroup = mixer;
-
-        // Play the sound
-        currentSource.Play();
-
-        // Move to the next audio source in the list
-        currentAudioSourceIndex = (currentAudioSourceIndex + 1) % audioSources.Count;
     }
 
     private bool CheckIfSoundDataEmpty(SoundData soundData)
@@ -95,14 +78,27 @@ public class SoundManager : MonoBehaviour
         return false;
     }
 
-    private bool CheckIfSoundExist(SoundData.SoundEntry entry, string soundName)
+    private void PlayClip(AudioClip clip, bool loop, AudioMixerGroup mixer)
     {
-        if (entry == null || entry.clip == null)
+        if (loop)
         {
-            Debug.LogWarning($"Sound '{soundName}' not found in SoundData.");
-            return false;
+            backgroundSource.clip = clip;
+            backgroundSource.loop = loop;
+            backgroundSource.outputAudioMixerGroup = mixer;
+
+            backgroundSource.Play();
+            return;
         }
-        return true;
+
+        AudioSource currentSource = audioSources[currentAudioSourceIndex];
+
+        currentSource.clip = clip;
+        currentSource.loop = loop;
+        currentSource.outputAudioMixerGroup = mixer;
+
+        currentSource.Play();
+
+        currentAudioSourceIndex = (currentAudioSourceIndex + 1) % audioSources.Count;
     }
 
     private void OnValidate()

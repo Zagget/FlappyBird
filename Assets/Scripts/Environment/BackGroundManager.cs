@@ -22,7 +22,6 @@ public class BackGroundManager : MonoBehaviour, IObserver
     private void Start()
     {
         SetUpBackground(levelOneImagePrefabs);
-        ChangeBackground(currentBackgrounds, levelThreeImagePrefabs);
     }
 
     private void SetUpBackground(List<GameObject> bgPrefabs)
