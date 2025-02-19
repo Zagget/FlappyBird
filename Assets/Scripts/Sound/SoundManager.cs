@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -78,17 +79,26 @@ public class SoundManager : MonoBehaviour
         return false;
     }
 
+    public void PlayBackgroundMusic(SoundData soundData)
+    {
+        bool empty = CheckIfSoundDataEmpty(soundData);
+        if (empty) return;
+
+        SoundData.SoundEntry randomEntry = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
+
+        if (backgroundSource.isPlaying)
+        {
+            backgroundSource.Stop();
+        }
+        backgroundSource.clip = randomEntry.clip;
+        backgroundSource.loop = randomEntry.loop;
+        backgroundSource.outputAudioMixerGroup = randomEntry.mixer;
+
+        backgroundSource.Play();
+    }
+
     private void PlayClip(AudioClip clip, bool loop, AudioMixerGroup mixer)
     {
-        if (loop)
-        {
-            backgroundSource.clip = clip;
-            backgroundSource.loop = loop;
-            backgroundSource.outputAudioMixerGroup = mixer;
-
-            backgroundSource.Play();
-            return;
-        }
 
         AudioSource currentSource = audioSources[currentAudioSourceIndex];
 

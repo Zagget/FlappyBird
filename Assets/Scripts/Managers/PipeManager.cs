@@ -12,21 +12,32 @@ public class PipeManager : MonoBehaviour, IObserver
     [Header("Obstacles")]
     [SerializeField] private GameObject pipe;
 
-
-    private float SPAWNPOINTX = 9.5f;
-
-    private float maxHeight = 3f;
-    private float minHeight = -1.6f;
+    private float spawnPointX;
+    private float minHeight;
+    private float maxHeight;
 
     private List<GameObject> spawnedPipes = new List<GameObject>();
     private float spawnTimer;
-
     private bool move = true;
 
-
-    public void OnNotify(Events action, int value)
+    private void Start()
     {
-        if (action == Events.Die)
+        CalculateScreenBounds();
+    }
+
+    void CalculateScreenBounds()
+    {
+        float screenHeight = Camera.main.orthographicSize * 2;
+        float screenWidth = screenHeight * Camera.main.aspect;
+
+        spawnPointX = screenWidth * 0.5f + 1f;
+        maxHeight = screenHeight * 0.25f;
+        minHeight = -maxHeight;
+    }
+
+    public void OnNotify(Events @event, int value)
+    {
+        if (@event == Events.Die)
         {
             move = false;
         }
@@ -40,6 +51,7 @@ public class PipeManager : MonoBehaviour, IObserver
             MoveAndDestroy();
         }
     }
+
 
     void SpawnTimer()
     {
@@ -60,24 +72,10 @@ public class PipeManager : MonoBehaviour, IObserver
         spawnedPipes.Add(spawnedPipe);
     }
 
-
     Vector3 GetSpawnPoint()
     {
-        int randomSpawnHeight = Random.Range(1, 4);
-        float height = 0;
-        switch (randomSpawnHeight)
-        {
-            case 1:
-                height = maxHeight;
-                break;
-            case 2:
-                height = minHeight;
-                break;
-            case 3:
-                height = maxHeight + minHeight * 0.5f;
-                break;
-        }
-        return new Vector3(SPAWNPOINTX, height);
+        float height = Random.Range(minHeight, maxHeight);
+        return new Vector3(spawnPointX, height);
     }
 
     void MoveAndDestroy()

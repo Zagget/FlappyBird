@@ -845,6 +845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statsOverlay: {fileID: 314878651}
   statsText: {fileID: 1975402717}
+  MenuMusic: {fileID: 11400000, guid: 18b1d6bbf9b6e574b9495f349e4c09a8, type: 2}
 --- !u!4 &1005783452
 Transform:
   m_ObjectHideFlags: 0

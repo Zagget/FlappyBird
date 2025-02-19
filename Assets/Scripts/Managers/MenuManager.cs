@@ -5,6 +5,8 @@ public class MenuManager : MonoBehaviour, IDataPersistance<PlayerData>
 {
     [SerializeField] private GameObject statsOverlay;
     [SerializeField] private TextMeshProUGUI statsText;
+    [SerializeField] private SoundData MenuMusic;
+
 
     private int jumps;
     private int distance;
@@ -12,11 +14,9 @@ public class MenuManager : MonoBehaviour, IDataPersistance<PlayerData>
 
     private bool showStats = false;
 
-
-
     private void Start()
     {
-
+        SoundManager.Instance.PlayBackgroundMusic(MenuMusic);
         statsOverlay.SetActive(showStats);
         DataPersistanceManager.Instance.UpdateAndLoad();
     }

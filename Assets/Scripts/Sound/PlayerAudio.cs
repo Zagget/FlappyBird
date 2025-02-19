@@ -12,7 +12,7 @@ public class PlayerAudio : MonoBehaviour, IObserver
 
     private void Start()
     {
-        SoundManager.Instance.PlayRandomSound(BackgroundMusic);
+        SoundManager.Instance.PlayBackgroundMusic(BackgroundMusic);
     }
 
     public void OnNotify(Events action, int value = 0)

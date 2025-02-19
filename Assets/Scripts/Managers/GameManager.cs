@@ -23,9 +23,9 @@ public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
         distance = 0;
     }
 
-    public void OnNotify(Events action, int value = 0)
+    public void OnNotify(Events @event, int value = 0)
     {
-        if (action == Events.PassedPipe)
+        if (@event == Events.PassedPipe)
         {
             currentScore++;
             distance += 5;
@@ -34,12 +34,12 @@ public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
             if (currentScore == level2) NotifyObservers(Events.Level2);
             if (currentScore == level3) NotifyObservers(Events.Level3);
         }
-        if (action == Events.Jump)
+        if (@event == Events.Jump)
         {
             currentJump++;
             NotifyObservers(Events.Jump);
         }
-        if (action == Events.Die)
+        if (@event == Events.Die)
         {
             NotifyObservers(Events.Die, currentScore);
             DataPersistanceManager.Instance.SavePlayerData();
