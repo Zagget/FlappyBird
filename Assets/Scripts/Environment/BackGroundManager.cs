@@ -115,7 +115,7 @@ public class BackGroundManager : MonoBehaviour, IObserver
                 continue;
             }
 
-            StartCoroutine(Fade(sr, 1, 0));
+            StartCoroutine(Fade.FadeInOrOut(sr, fadeDuration, 1, 0));
         }
         yield return new WaitForSeconds(fadeDuration);
 
@@ -130,27 +130,27 @@ public class BackGroundManager : MonoBehaviour, IObserver
                 continue;
             }
             sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0f);
-            StartCoroutine(Fade(sr, 0, 1));
+            StartCoroutine(Fade.FadeInOrOut(sr, fadeDuration, 0, 1));
         }
         //yield return new WaitForSeconds(fadeDuration);
     }
 
-    private IEnumerator Fade(SpriteRenderer sr, float startAlpha, float endAlpha)
-    {
-        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, startAlpha);
+    // private IEnumerator Fade(SpriteRenderer sr, float startAlpha, float endAlpha)
+    // {
+    //     sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, startAlpha);
 
-        float elapsedTime = 0f;
-        while (elapsedTime < fadeDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            float alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / fadeDuration);
+    //     float elapsedTime = 0f;
+    //     while (elapsedTime < fadeDuration)
+    //     {
+    //         elapsedTime += Time.deltaTime;
+    //         float alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / fadeDuration);
 
-            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, alpha);
+    //         sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, alpha);
 
-            yield return null;
-        }
-        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, endAlpha);
-    }
+    //         yield return null;
+    //     }
+    //     sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, endAlpha);
+    // }
 
     private void OnEnable()
     {

@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class AnimationController : MonoBehaviour, IObserver
 {
-    [SerializeField] Subject Player;
+    [SerializeField] private Subject Player;
+    [SerializeField] private Animator birdController;
 
-    [SerializeField] Animator birdController;
-
-    public void OnNotify(Events action, int value = 0)
+    public void OnNotify(Events @event, int value = 0)
     {
-        if (action == Events.Jump)
+        if (@event == Events.Jump)
         {
             PlayAnimation(birdController, "Flap");
+
         }
     }
 
@@ -18,7 +18,6 @@ public class AnimationController : MonoBehaviour, IObserver
     {
         anim.Play(animatonName);
     }
-
 
     private void OnEnable()
     {
