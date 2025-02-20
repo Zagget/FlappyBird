@@ -1248,18 +1248,20 @@ MonoBehaviour:
   - {fileID: 522589051}
   - {fileID: 1992209159}
   - {fileID: 356776483}
-  scoreText: {fileID: 115277725}
-  scorePromptText: {fileID: 982155126}
-  enterPromptText: {fileID: 463001278}
   inGameOverlay: {fileID: 1588456633}
   diedOverlay: {fileID: 1639096027}
   leaderBoardOverlay: {fileID: 24694542}
   addLeaderboardOverlay: {fileID: 897640425}
-  enterPromptOverlay: {fileID: 454211668}
+  promptOverlay: {fileID: 454211668}
   retry: {fileID: 1141098768}
   menu: {fileID: 241754143}
   enter: {fileID: 1651042153}
+  scoreText: {fileID: 115277725}
+  scorePromptText: {fileID: 982155126}
+  promptText: {fileID: 463001278}
   nameField: {fileID: 1668287947}
+  durationBeforeFade: 3
+  fadeDuration: 1.5
 --- !u!1 &406707851
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,12 +1484,12 @@ GameObject:
   - component: {fileID: 454211671}
   - component: {fileID: 454211670}
   m_Layer: 0
-  m_Name: EnterPrompt
+  m_Name: Prompt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &454211669
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1521,7 +1523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1612,8 +1614,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4291747597
-  m_fontColor: {r: 0.050980397, g: 0.8745099, b: 0.8078432, a: 1}
+    rgba: 13557517
+  m_fontColor: {r: 0.050980397, g: 0.8745099, b: 0.8078432, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5080,7 +5082,6 @@ Transform:
   m_Children:
   - {fileID: 592253392}
   - {fileID: 1295231190}
-  - {fileID: 1632053457}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1519567920
@@ -5388,83 +5389,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1621394334}
   m_CullTransparentMesh: 1
---- !u!1 &1632053455
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1632053457}
-  - component: {fileID: 1632053456}
-  m_Layer: 0
-  m_Name: Bounds
-  m_TagString: Bounds
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!61 &1632053456
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1632053455}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!4 &1632053457
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1632053455}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.15, y: -0.06, z: 0}
-  m_LocalScale: {x: 7.816992, y: 12.280072, z: 1.9427131}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1506829164}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1639096027
 GameObject:
   m_ObjectHideFlags: 0

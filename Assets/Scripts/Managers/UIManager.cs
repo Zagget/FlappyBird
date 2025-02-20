@@ -13,55 +13,72 @@ public class UIManager : MonoBehaviour, IObserver
     [SerializeField] private List<TextMeshProUGUI> names;
     [SerializeField] private List<TextMeshProUGUI> scores;
 
-    [Header("Text")]
-    [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI scorePromptText;
-    [SerializeField] private TextMeshProUGUI enterPromptText;
-
     [Header("Overlays")]
     [SerializeField] private GameObject inGameOverlay;
     [SerializeField] private GameObject diedOverlay;
     [SerializeField] private GameObject leaderBoardOverlay;
     [SerializeField] private GameObject addLeaderboardOverlay;
-    [SerializeField] private GameObject enterPromptOverlay;
+    [SerializeField] private GameObject promptOverlay;
 
     [Header("Buttons")]
     [SerializeField] private Button retry;
     [SerializeField] private Button menu;
     [SerializeField] private Button enter;
+
+    [Header("Text")]
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI scorePromptText;
+    [SerializeField] private TextMeshProUGUI promptText;
+
     [Header("InputFields")]
     [SerializeField] private TMP_InputField nameField;
 
+    [Header("Prompt Config")]
+    [SerializeField] private float durationBeforeFade = 5f;
+    [SerializeField] private float fadeDuration = 1.5f;
+
+    private struct PromptUI
+    {
+        public Image img;
+        public TextMeshProUGUI text;
+    }
+    private PromptUI prompt;
+
+    Coroutine ShowPrompt;
     private int score;
 
     void Start()
     {
         leaderboardManager = FindAnyObjectByType<LeaderboardManager>();
+        if (leaderboardManager == null) Debug.LogError("leaderboardManager is null");
+
+        prompt = new PromptUI { img = promptOverlay.GetComponent<Image>(), text = promptText };
+        if (prompt.img == null) Debug.LogError("Prompt image is null");
 
         InGameOverlay();
         retry.onClick.AddListener(OnRetryClicked);
         menu.onClick.AddListener(OnMenuClicked);
-        enter.onClick.AddListener(onEnterClicked);
+        enter.onClick.AddListener(OnEnterClicked);
     }
 
     public void InGameOverlay()
     {
-        diedOverlay.SetActive(false);
-        leaderBoardOverlay.SetActive(false);
-        inGameOverlay.SetActive(true);
-        enterPromptOverlay.SetActive(false);
+        SetOverlays(true, false, false, false);
         score = 0;
     }
 
     public void GameOverOverlay()
     {
-        inGameOverlay.SetActive(false);
-        enterPromptOverlay.SetActive(false);
-        diedOverlay.SetActive(true);
-        leaderBoardOverlay.SetActive(true);
-        addLeaderboardOverlay.SetActive(true);
-        scorePromptText.text = "Score   " + score.ToString();
+        SetOverlays(false, true, true, true);
+        scorePromptText.text = $"Score {score}";
+    }
 
+    private void SetOverlays(bool inGame, bool died, bool leaderboard, bool addLeaderboard)
+    {
+        inGameOverlay.SetActive(inGame);
+        diedOverlay.SetActive(died);
+        leaderBoardOverlay.SetActive(leaderboard);
+        addLeaderboardOverlay.SetActive(addLeaderboard);
     }
 
     public void OnNotify(Events action, int value)
@@ -101,82 +118,75 @@ public class UIManager : MonoBehaviour, IObserver
         }
     }
 
-    void onEnterClicked()
+    void OnEnterClicked()
     {
-        string name = nameField.text;
-        int length = name.Length;
+        string playerName = nameField.text.Trim();
 
-        if (string.IsNullOrWhiteSpace(name))
+        if (string.IsNullOrWhiteSpace(playerName))
         {
-            StartCoroutine(ShowPromptForDuration(5f, "Please Enter a name."));
+            ShowPromptMessage("Please enter a name.");
             return;
         }
 
-        if (length > 5)
+        if (playerName.Length > 5)
         {
-            StartCoroutine(ShowPromptForDuration(5f, "Please enter a name with 5 or fewer characters."));
+            ShowPromptMessage("Name must be 5 characters or fewer.");
             return;
         }
 
-        leaderboardManager.AddScore(name, score);
+        leaderboardManager.AddScore(playerName, score);
         UpdateLeaderboard();
         DataPersistanceManager.Instance.SaveLeaderboardData();
         addLeaderboardOverlay.SetActive(false);
     }
 
-    IEnumerator ShowPromptForDuration(float duration, string prompt)
+    void ShowPromptMessage(string msg)
     {
-        enterPromptOverlay.SetActive(true);
-        enterPromptText.text = prompt;
+        if (ShowPrompt != null)
+        {
+            StopCoroutine(ShowPrompt);
+        }
 
-        Image overlayImage = enterPromptOverlay.GetComponent<Image>();
-        Color textColor = enterPromptText.color;
-        Color overlayColor = overlayImage.color;
+        ShowPrompt = StartCoroutine(ShowPromptForDuration(durationBeforeFade, msg));
+    }
 
-        textColor.a = 1f;
-        overlayColor.a = 1f;
-        enterPromptText.color = textColor;
-        overlayImage.color = overlayColor;
+
+    IEnumerator ShowPromptForDuration(float duration, string msg)
+    {
+        promptText.text = msg;
+        SetPromptUIOpacitiy(prompt, 1f);
 
         yield return new WaitForSeconds(duration);
 
-        float fadeDuration = 1.5f;
-        float elapsedTime = 0f;
+        yield return StartCoroutine(FadeOutPromptUI(prompt, fadeDuration));
+    }
 
+    private void SetPromptUIOpacitiy(PromptUI ui, float alpha)
+    {
+        Color imgColor = ui.img.color;
+        imgColor.a = alpha;
+        ui.img.color = imgColor;
+
+        Color textColor = ui.text.color;
+        textColor.a = alpha;
+        ui.text.color = textColor;
+    }
+
+
+    private IEnumerator FadeOutPromptUI(PromptUI ui, float fadeDuration)
+    {
+        float elapsedTime = 0f;
         while (elapsedTime < fadeDuration)
         {
             elapsedTime += Time.deltaTime;
             float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
-
-            textColor.a = alpha;
-            overlayColor.a = alpha;
-
-            enterPromptText.color = textColor;
-            overlayImage.color = overlayColor;
-
+            SetPromptUIOpacitiy(prompt, alpha);
             yield return null;
         }
-
-        enterPromptOverlay.SetActive(false);
     }
 
-    void OnRetryClicked()
-    {
-        SceneLoader.Instance.LoadScene(1);
-    }
-
-    void OnMenuClicked()
-    {
-        SceneLoader.Instance.LoadScene(0);
-    }
-
-    void OnEnable()
-    {
-        gameManagerSubject.AddObserver(this);
-    }
-
-    void OnDisable()
-    {
-        gameManagerSubject.RemoveObserver(this);
-    }
+    void OnRetryClicked() => SceneLoader.Instance.LoadScene(1);
+    void OnMenuClicked() => SceneLoader.Instance.LoadScene(0);
+    void OnEnable() => gameManagerSubject.AddObserver(this);
+    void OnDisable() => gameManagerSubject.RemoveObserver(this);
 }
