@@ -180,7 +180,7 @@ public class UIManager : MonoBehaviour, IObserver
         {
             elapsedTime += Time.deltaTime;
             float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
-            SetPromptUIOpacitiy(prompt, alpha);
+            SetPromptUIOpacitiy(ui, alpha);
             yield return null;
         }
     }
