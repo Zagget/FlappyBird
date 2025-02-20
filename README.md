@@ -1,6 +1,6 @@
 # FlappyBird
 
-Student Project made in unity for android.
+Student Project made in Unity for android.
 
 Tested on Android Studio: Pixel 8 Api33
 
