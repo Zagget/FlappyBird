@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BackGroundManager : MonoBehaviour, IObserver
 {
+    [SerializeField] private Subject gameManagerSubject;
+
     [Header("BackgroundPrefabs")]
     [SerializeField] private List<GameObject> levelOneImagePrefabs = new List<GameObject>();
     [SerializeField] private List<GameObject> levelTwoImagePrefabs = new List<GameObject>();
@@ -14,7 +16,6 @@ public class BackGroundManager : MonoBehaviour, IObserver
     [SerializeField] private bool move = true;
     [SerializeField] private float fadeDuration;
 
-    [SerializeField] private Subject gameManagerSubject;
 
     private List<GameObject> currentBackgrounds = new List<GameObject>();
     private List<ImageMovement> imageMovements = new List<ImageMovement>();
@@ -132,25 +133,7 @@ public class BackGroundManager : MonoBehaviour, IObserver
             sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0f);
             StartCoroutine(Fade.FadeInOrOut(sr, fadeDuration, 0, 1));
         }
-        //yield return new WaitForSeconds(fadeDuration);
     }
-
-    // private IEnumerator Fade(SpriteRenderer sr, float startAlpha, float endAlpha)
-    // {
-    //     sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, startAlpha);
-
-    //     float elapsedTime = 0f;
-    //     while (elapsedTime < fadeDuration)
-    //     {
-    //         elapsedTime += Time.deltaTime;
-    //         float alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / fadeDuration);
-
-    //         sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, alpha);
-
-    //         yield return null;
-    //     }
-    //     sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, endAlpha);
-    // }
 
     private void OnEnable()
     {

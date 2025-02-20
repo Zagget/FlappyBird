@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AnimationController : MonoBehaviour, IObserver
 {
-    [SerializeField] private Subject Player;
+    [SerializeField] private Subject gameManagerSubject;
     [SerializeField] private Animator birdController;
 
     public void OnNotify(Events @event, int value = 0)
@@ -10,7 +10,6 @@ public class AnimationController : MonoBehaviour, IObserver
         if (@event == Events.Jump)
         {
             PlayAnimation(birdController, "Flap");
-
         }
     }
 
@@ -19,13 +18,6 @@ public class AnimationController : MonoBehaviour, IObserver
         anim.Play(animatonName);
     }
 
-    private void OnEnable()
-    {
-        Player.AddObserver(this);
-    }
-
-    private void OnDisable()
-    {
-        Player.RemoveObserver(this);
-    }
+    void OnEnable() => gameManagerSubject.AddObserver(this);
+    void OnDisable() => gameManagerSubject.RemoveObserver(this);
 }

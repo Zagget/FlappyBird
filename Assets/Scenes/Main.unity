@@ -1801,7 +1801,6 @@ Transform:
   m_Children:
   - {fileID: 1012825687}
   - {fileID: 1986724658}
-  - {fileID: 1413212920}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &513562028
@@ -2385,6 +2384,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &576977140
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 576977141}
+  - component: {fileID: 576977142}
+  m_Layer: 0
+  m_Name: Wind
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &576977141
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576977140}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1506829164}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &576977142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576977140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c5242ab59380f4a9a5abb6f0b9e5c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManagerSubject: {fileID: 1449345719}
+  windEffectPrefabs: {fileID: 4337112702137962937, guid: 385dfbcadc028164f998798146ede25a, type: 3}
+  spawnPoint: {fileID: 513562027}
+  speed: 15
+  fadeDuration: 1
+  fallDuration: 2
+  frequency: 2
+  amplitude: 0.7
 --- !u!1 &578591809
 GameObject:
   m_ObjectHideFlags: 0
@@ -2460,6 +2511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29b8972754f58524298d3a967745af8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManagerSubject: {fileID: 1449345719}
   levelOneImagePrefabs:
   - {fileID: 6500771685468414412, guid: 02abaf8cd3e555c4cb300dc27ab3ec1a, type: 3}
   - {fileID: 4587416499896513809, guid: 1e2de59e2f9ed4046ae990589a8363b4, type: 3}
@@ -2486,7 +2538,6 @@ MonoBehaviour:
   scrollLeft: 1
   move: 1
   fadeDuration: 2
-  gameManagerSubject: {fileID: 1449345719}
 --- !u!1 &620247957
 GameObject:
   m_ObjectHideFlags: 0
@@ -3103,37 +3154,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760801434}
   m_CullTransparentMesh: 1
---- !u!1 &790461945
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 790461946}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &790461946
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790461945}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.471576, y: 0.011226311, z: -0.1423533}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &886838759
 GameObject:
   m_ObjectHideFlags: 0
@@ -4108,7 +4128,7 @@ GameObject:
   - component: {fileID: 1295231190}
   - component: {fileID: 1295231191}
   m_Layer: 0
-  m_Name: PipeManager
+  m_Name: ObstacleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4142,9 +4162,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManagerSubject: {fileID: 1449345719}
+  pipe: {fileID: 3526880813056194422, guid: b606d440de1c9424480f8bf8e945e843, type: 3}
   speed: 3
   spawnInterval: 2
-  pipe: {fileID: 3526880813056194422, guid: b606d440de1c9424480f8bf8e945e843, type: 3}
+  verticalSpawnMargin: 0.3
 --- !u!1 &1337387304
 GameObject:
   m_ObjectHideFlags: 0
@@ -4683,56 +4704,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410585667}
   m_CullTransparentMesh: 1
---- !u!1 &1413212919
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1413212920}
-  - component: {fileID: 1413212921}
-  m_Layer: 0
-  m_Name: WindEffect
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1413212920
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1413212919}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.8, y: -2.17, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 513562027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1413212921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1413212919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c5242ab59380f4a9a5abb6f0b9e5c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 513562028}
-  windEffectPrefabs: {fileID: 4337112702137962937, guid: 385dfbcadc028164f998798146ede25a, type: 3}
-  speed: 15
-  fallDuration: 2
-  frequency: 2
-  amplitude: 0.7
 --- !u!1 &1421415219
 GameObject:
   m_ObjectHideFlags: 0
@@ -5082,6 +5053,7 @@ Transform:
   m_Children:
   - {fileID: 592253392}
   - {fileID: 1295231190}
+  - {fileID: 576977141}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1519567920
@@ -6095,7 +6067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd21a449101dcac42a0d1d2281716a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 513562028}
+  gameManagerSubject: {fileID: 1449345719}
   birdController: {fileID: 513562031}
 --- !u!4 &1780337909
 Transform:
@@ -6793,4 +6765,3 @@ SceneRoots:
   - {fileID: 629183542}
   - {fileID: 1990086126}
   - {fileID: 1098146787}
-  - {fileID: 790461946}

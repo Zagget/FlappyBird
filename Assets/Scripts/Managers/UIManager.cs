@@ -81,14 +81,14 @@ public class UIManager : MonoBehaviour, IObserver
         addLeaderboardOverlay.SetActive(addLeaderboard);
     }
 
-    public void OnNotify(Events action, int value)
+    public void OnNotify(Events @event, int value)
     {
-        if (action == Events.PassedPipe)
+        if (@event == Events.PassedPipe)
         {
             UpdateScore(value);
         }
 
-        if (action == Events.Die)
+        if (@event == Events.Die)
         {
             GameOverOverlay();
             UpdateLeaderboard();

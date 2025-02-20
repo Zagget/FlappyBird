@@ -1,22 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PipeManager : MonoBehaviour, IObserver
+public class ObstacleManager : MonoBehaviour, IObserver
 {
     [SerializeField] private Subject gameManagerSubject;
+
+    [Header("Obstacles")]
+    [SerializeField] private GameObject pipe;
 
     [Header("Behaviour")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float spawnInterval = 2f;
 
-    [Header("Obstacles")]
-    [SerializeField] private GameObject pipe;
+    [Range(0, 1)]
+    [SerializeField] private float verticalSpawnMargin = 0.3f;
 
+    private List<GameObject> spawnedPipes = new List<GameObject>();
+
+    private float destroyPipePoint;
     private float spawnPointX;
     private float minHeight;
     private float maxHeight;
 
-    private List<GameObject> spawnedPipes = new List<GameObject>();
     private float spawnTimer;
     private bool move = true;
 
@@ -27,11 +32,13 @@ public class PipeManager : MonoBehaviour, IObserver
 
     void CalculateScreenBounds()
     {
-        float screenHeight = Camera.main.orthographicSize * 2;
-        float screenWidth = screenHeight * Camera.main.aspect;
+        float halfScreenHeight = Camera.main.orthographicSize;
+        float halfScreenWidth = halfScreenHeight * Camera.main.aspect;
 
-        spawnPointX = screenWidth * 0.5f + 1f;
-        maxHeight = screenHeight * 0.25f;
+        destroyPipePoint = -halfScreenWidth - 1f;
+
+        spawnPointX = halfScreenWidth + 1f;
+        maxHeight = halfScreenHeight * verticalSpawnMargin;
         minHeight = -maxHeight;
     }
 
@@ -52,7 +59,6 @@ public class PipeManager : MonoBehaviour, IObserver
         }
     }
 
-
     void SpawnTimer()
     {
         spawnTimer += Time.deltaTime;
@@ -65,17 +71,12 @@ public class PipeManager : MonoBehaviour, IObserver
 
     void SpawnPipe()
     {
-        Vector3 spawnPoint = GetSpawnPoint();
+        float height = Random.Range(minHeight, maxHeight);
+        Vector3 spawnPoint = new Vector3(spawnPointX, height);
 
         var spawnedPipe = Instantiate(pipe, spawnPoint, Quaternion.identity);
         spawnedPipe.transform.SetParent(transform);
         spawnedPipes.Add(spawnedPipe);
-    }
-
-    Vector3 GetSpawnPoint()
-    {
-        float height = Random.Range(minHeight, maxHeight);
-        return new Vector3(spawnPointX, height);
     }
 
     void MoveAndDestroy()
@@ -85,7 +86,7 @@ public class PipeManager : MonoBehaviour, IObserver
             GameObject pipe = spawnedPipes[i];
             pipe.transform.Translate(Vector2.left * speed * Time.deltaTime);
 
-            if (pipe.transform.position.x < -5)
+            if (pipe.transform.position.x < destroyPipePoint)
             {
                 Destroy(pipe);
                 spawnedPipes.RemoveAt(i);
@@ -93,13 +94,6 @@ public class PipeManager : MonoBehaviour, IObserver
         }
     }
 
-    private void OnEnable()
-    {
-        gameManagerSubject.AddObserver(this);
-    }
-
-    private void OnDisable()
-    {
-        gameManagerSubject.RemoveObserver(this);
-    }
+    void OnEnable() => gameManagerSubject.AddObserver(this);
+    void OnDisable() => gameManagerSubject.RemoveObserver(this);
 }

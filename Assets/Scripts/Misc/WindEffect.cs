@@ -3,21 +3,26 @@ using UnityEngine;
 
 public class WindEffect : MonoBehaviour, IObserver
 {
-    [SerializeField] private Subject Player;
-
+    [SerializeField] private Subject gameManagerSubject;
     [SerializeField] private GameObject windEffectPrefabs;
+    [SerializeField] private Transform spawnPoint;
+
+    [Header("Wind Config")]
     [SerializeField] private float speed;
+    [SerializeField] private float fadeDuration;
     [SerializeField] private float fallDuration;
     [SerializeField] float frequency = 3f;
     [SerializeField] float amplitude = 0.5f;
+
 
     public void OnNotify(Events @event, int value = 0)
     {
         if (@event == Events.Jump)
         {
-            Vector2 spawnPos = transform.position;
+            Vector2 spawnPos = spawnPoint.transform.position;
 
             GameObject wind = Instantiate(windEffectPrefabs, spawnPos, windEffectPrefabs.transform.rotation);
+            wind.transform.SetParent(transform);
             SpriteRenderer sr = wind.GetComponent<SpriteRenderer>();
             StartCoroutine(Move(wind, sr, spawnPos));
         }
@@ -25,10 +30,9 @@ public class WindEffect : MonoBehaviour, IObserver
 
     private IEnumerator Move(GameObject wind, SpriteRenderer sr, Vector2 startPos)
     {
-        startPos = transform.position;
         Vector2 endPosition = new Vector2(startPos.x, startPos.y - speed);
 
-        StartCoroutine(Fade.FadeInOrOut(sr, 1.5f, 1, 0));
+        StartCoroutine(Fade.FadeInOrOut(sr, fadeDuration, 1, 0));
 
         float elapsedTime = 0f;
         while (elapsedTime < fallDuration)
@@ -36,10 +40,8 @@ public class WindEffect : MonoBehaviour, IObserver
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / fallDuration;
 
-            // Smooth downward movement
             float newY = Mathf.Lerp(startPos.y, endPosition.y, t);
 
-            // Sinusoidal side-to-side sway
             float newX = startPos.x + Mathf.Sin(elapsedTime * frequency) * amplitude;
 
             wind.transform.position = new Vector2(newX, newY);
@@ -51,13 +53,6 @@ public class WindEffect : MonoBehaviour, IObserver
     }
 
 
-    private void OnEnable()
-    {
-        Player.AddObserver(this);
-    }
-
-    private void OnDisable()
-    {
-        Player.RemoveObserver(this);
-    }
+    void OnEnable() => gameManagerSubject.AddObserver(this);
+    void OnDisable() => gameManagerSubject.RemoveObserver(this);
 }

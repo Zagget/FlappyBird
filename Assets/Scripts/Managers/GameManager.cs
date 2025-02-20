@@ -59,13 +59,6 @@ public class GameManager : Subject, IObserver, IDataPersistance<PlayerData>
         data.distance += this.distance;
     }
 
-    private void OnEnable()
-    {
-        playerSubject.AddObserver(this);
-    }
-
-    private void OnDisable()
-    {
-        playerSubject.RemoveObserver(this);
-    }
+    void OnEnable() => playerSubject.AddObserver(this);
+    void OnDisable() => playerSubject.RemoveObserver(this);
 }
