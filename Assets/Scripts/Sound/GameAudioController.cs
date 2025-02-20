@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerAudio : MonoBehaviour, IObserver
+public class GameAudioController : MonoBehaviour, IObserver
 {
     [SerializeField] Subject gameManagerSubject;
 
@@ -38,13 +38,6 @@ public class PlayerAudio : MonoBehaviour, IObserver
         }
     }
 
-    private void OnEnable()
-    {
-        gameManagerSubject.AddObserver(this);
-    }
-
-    private void OnDisable()
-    {
-        gameManagerSubject.RemoveObserver(this);
-    }
+    void OnEnable() => gameManagerSubject.AddObserver(this);
+    void OnDisable() => gameManagerSubject.RemoveObserver(this);
 }

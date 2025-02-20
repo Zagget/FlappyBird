@@ -51,11 +51,10 @@ public class SoundManager : MonoBehaviour
 
     private void SetAudioMixerVolume()
     {
-        if (mixer != null)
-        {
-            mixer.SetFloat("playerVolume", Mathf.Log10(player) * 20);
-            mixer.SetFloat("backgroundVolume", Mathf.Log10(background) * 20);
-        }
+        if (mixer == null) { Debug.LogError("mixer is null"); return; }
+
+        mixer.SetFloat("playerVolume", Mathf.Log10(player) * 20);
+        mixer.SetFloat("backgroundVolume", Mathf.Log10(background) * 20);
     }
 
     public void PlayRandomSound(SoundData soundData)
@@ -72,10 +71,23 @@ public class SoundManager : MonoBehaviour
     {
         if (soundData == null || soundData.sounds.Length == 0)
         {
-            Debug.LogWarning("SoundData is null or contains no sounds.");
+            Debug.LogWarning("Not playing Sound, SoundData is null or contains no sounds.");
             return true;
         }
         return false;
+    }
+
+    private void PlayClip(AudioClip clip, bool loop, AudioMixerGroup mixer)
+    {
+        AudioSource currentSource = audioSources[currentAudioSourceIndex];
+
+        currentSource.clip = clip;
+        currentSource.loop = loop;
+        currentSource.outputAudioMixerGroup = mixer;
+
+        currentSource.Play();
+
+        currentAudioSourceIndex = (currentAudioSourceIndex + 1) % audioSources.Count;
     }
 
     public void PlayBackgroundMusic(SoundData soundData)
@@ -96,22 +108,5 @@ public class SoundManager : MonoBehaviour
         backgroundSource.Play();
     }
 
-    private void PlayClip(AudioClip clip, bool loop, AudioMixerGroup mixer)
-    {
-
-        AudioSource currentSource = audioSources[currentAudioSourceIndex];
-
-        currentSource.clip = clip;
-        currentSource.loop = loop;
-        currentSource.outputAudioMixerGroup = mixer;
-
-        currentSource.Play();
-
-        currentAudioSourceIndex = (currentAudioSourceIndex + 1) % audioSources.Count;
-    }
-
-    private void OnValidate()
-    {
-        SetAudioMixerVolume();
-    }
+    void OnValidate() => SetAudioMixerVolume();
 }

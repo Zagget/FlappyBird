@@ -23,6 +23,7 @@ public class WindEffect : MonoBehaviour, IObserver
 
             GameObject wind = Instantiate(windEffectPrefabs, spawnPos, windEffectPrefabs.transform.rotation);
             wind.transform.SetParent(transform);
+
             SpriteRenderer sr = wind.GetComponent<SpriteRenderer>();
             StartCoroutine(Move(wind, sr, spawnPos));
         }
@@ -51,7 +52,6 @@ public class WindEffect : MonoBehaviour, IObserver
 
         Destroy(wind);
     }
-
 
     void OnEnable() => gameManagerSubject.AddObserver(this);
     void OnDisable() => gameManagerSubject.RemoveObserver(this);
