@@ -2,29 +2,42 @@ using UnityEngine;
 
 public class PlayerController : Subject
 {
+    private Rigidbody2D rb;
     [SerializeField] private float upwardForce;
 
-    private Rigidbody2D rb;
+    private float halfScreenHeight;
+    private float verticalBounds;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        halfScreenHeight = Camera.main.orthographicSize;
+        verticalBounds = halfScreenHeight + 1.5f;
     }
 
     private void Update()
     {
+        CheckOutOfBounds();
         if (Input.GetMouseButtonDown(0) || TouchInput())
         {
             Flap();
         }
     }
 
+    private void CheckOutOfBounds()
+    {
+        if (transform.position.y > verticalBounds || transform.position.y < -verticalBounds)
+        {
+            NotifyObservers(Events.Die);
+            Destroy(gameObject);
+        }
+    }
+
     private bool TouchInput()
     {
-        if (Input.touchCount > 0)
+        for (int i = 0; i < Input.touchCount; i++)
         {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
+            if (Input.GetTouch(i).phase == TouchPhase.Began)
             {
                 return true;
             }
@@ -45,7 +58,6 @@ public class PlayerController : Subject
     {
         if (other.CompareTag("Pipe"))
         {
-            Debug.Log("Player Died");
             NotifyObservers(Events.Die);
             Destroy(gameObject);
             return;
@@ -53,20 +65,7 @@ public class PlayerController : Subject
 
         if (other.CompareTag("PassedPipe"))
         {
-            Debug.Log("Player passed a pipe");
             NotifyObservers(Events.PassedPipe);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (gameObject == null) return;
-
-        if (other.CompareTag("Bounds"))
-        {
-            Debug.Log("Player got outside bounds");
-            NotifyObservers(Events.Die);
-            Destroy(gameObject);
         }
     }
 }

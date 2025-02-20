@@ -3,32 +3,32 @@ using UnityEngine;
 
 public class LeaderboardManager : MonoBehaviour, IDataPersistance<LeaderboardData>
 {
-    private List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
+    private LeaderboardData leaderboardData = new LeaderboardData();
 
     public void AddScore(string playerName, int score)
     {
-        leaderboard.Add(new LeaderboardEntry(playerName, score));
-        leaderboard.Sort((a, b) => b.score.CompareTo(a.score));
+        leaderboardData.LeaderBoardEntries.Add(new LeaderboardEntry(playerName, score));
+        leaderboardData.LeaderBoardEntries.Sort((a, b) => b.score.CompareTo(a.score));
 
-        if (leaderboard.Count > 10)
+        if (leaderboardData.LeaderBoardEntries.Count > 10)
         {
             Debug.Log("More than 10 entries removed last entry");
-            leaderboard.RemoveAt(leaderboard.Count - 1);
+            leaderboardData.LeaderBoardEntries.RemoveAt(leaderboardData.LeaderBoardEntries.Count - 1);
         }
     }
 
     public List<LeaderboardEntry> GetLeaderBoard()
     {
-        return leaderboard;
+        return leaderboardData.LeaderBoardEntries;
     }
 
     public void LoadData(LeaderboardData data)
     {
-        leaderboard = new List<LeaderboardEntry>(data.LeaderBoardEntries);
+        leaderboardData = data;
     }
 
     public void SaveData(LeaderboardData data)
     {
-        data.LeaderBoardEntries = new List<LeaderboardEntry>(leaderboard);
+        data.LeaderBoardEntries = new List<LeaderboardEntry>(leaderboardData.LeaderBoardEntries);
     }
 }

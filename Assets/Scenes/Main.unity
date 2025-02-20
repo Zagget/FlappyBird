@@ -4729,8 +4729,8 @@ MonoBehaviour:
   windEffectPrefabs: {fileID: 4337112702137962937, guid: 385dfbcadc028164f998798146ede25a, type: 3}
   speed: 15
   fallDuration: 2
-  frequency: 3
-  amplitude: 0.5
+  frequency: 2
+  amplitude: 0.7
 --- !u!1 &1421415219
 GameObject:
   m_ObjectHideFlags: 0

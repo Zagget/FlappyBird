@@ -10,27 +10,27 @@ public class UIManager : MonoBehaviour, IObserver
     private LeaderboardManager leaderboardManager;
 
     [Header("LeaderBoard")]
-    [SerializeField] List<TextMeshProUGUI> names;
-    [SerializeField] List<TextMeshProUGUI> scores;
+    [SerializeField] private List<TextMeshProUGUI> names;
+    [SerializeField] private List<TextMeshProUGUI> scores;
 
     [Header("Text")]
-    [SerializeField] TextMeshProUGUI scoreText;
-    [SerializeField] TextMeshProUGUI scorePromptText;
-    [SerializeField] TextMeshProUGUI enterPromptText;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI scorePromptText;
+    [SerializeField] private TextMeshProUGUI enterPromptText;
 
     [Header("Overlays")]
-    [SerializeField] GameObject inGameOverlay;
-    [SerializeField] GameObject diedOverlay;
-    [SerializeField] GameObject leaderBoardOverlay;
-    [SerializeField] GameObject addLeaderboardOverlay;
-    [SerializeField] GameObject enterPromptOverlay;
+    [SerializeField] private GameObject inGameOverlay;
+    [SerializeField] private GameObject diedOverlay;
+    [SerializeField] private GameObject leaderBoardOverlay;
+    [SerializeField] private GameObject addLeaderboardOverlay;
+    [SerializeField] private GameObject enterPromptOverlay;
 
     [Header("Buttons")]
-    [SerializeField] Button retry;
-    [SerializeField] Button menu;
-    [SerializeField] Button enter;
+    [SerializeField] private Button retry;
+    [SerializeField] private Button menu;
+    [SerializeField] private Button enter;
     [Header("InputFields")]
-    [SerializeField] TMP_InputField nameField;
+    [SerializeField] private TMP_InputField nameField;
 
     private int score;
 
@@ -86,7 +86,6 @@ public class UIManager : MonoBehaviour, IObserver
 
     void UpdateLeaderboard()
     {
-        //List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
         List<LeaderboardEntry> leaderboard = leaderboardManager.GetLeaderBoard();
 
         for (int i = 0; i < names.Count; i++)
@@ -95,7 +94,7 @@ public class UIManager : MonoBehaviour, IObserver
             scores[i].text = "";
         }
 
-        for (int i = 0; i < leaderboard.Count; i++)
+        for (int i = 0; i < leaderboard.Count && i < names.Count; i++)
         {
             names[i].text = leaderboard[i].playerName;
             scores[i].text = leaderboard[i].score.ToString();
